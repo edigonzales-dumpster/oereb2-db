@@ -28,6 +28,51 @@ xsi:schemaLocation="http://www.interlis.ch/INTERLIS2.3">
           </LocalisationCH_V1.MultilingualText>
         </Titel>
       </OeREBKRM_V1_1.CodelistenText.ThemaTxt>
+
+      <OeREBKRM_V1_1.CodelistenText.ThemaTxt TID="4">
+        <Code>ch.Nutzungsplanung</Code>
+        <SubThema>ch.SO.NutzungsplanungGrundnutzung</SubThema>
+        <Titel>
+          <LocalisationCH_V1.MultilingualText>
+            <LocalisedText>
+              <LocalisationCH_V1.LocalisedText>
+                <Language>de</Language>
+                <Text>Nutzungsplanung Grundnutzung</Text>
+              </LocalisationCH_V1.LocalisedText>
+            </LocalisedText>
+          </LocalisationCH_V1.MultilingualText>
+        </Titel>
+      </OeREBKRM_V1_1.CodelistenText.ThemaTxt>
+      <OeREBKRM_V1_1.CodelistenText.ThemaTxt TID="5">
+        <Code>ch.Nutzungsplanung</Code>
+        <SubThema>ch.SO.NutzungsplanungUeberlagernd</SubThema>
+        <Titel>
+          <LocalisationCH_V1.MultilingualText>
+            <LocalisedText>
+              <LocalisationCH_V1.LocalisedText>
+                <Language>de</Language>
+                <Text>Nutzungsplanung überlagernd</Text>
+              </LocalisationCH_V1.LocalisedText>
+            </LocalisedText>
+          </LocalisationCH_V1.MultilingualText>
+        </Titel>
+      </OeREBKRM_V1_1.CodelistenText.ThemaTxt>
+
+      <OeREBKRM_V1_1.CodelistenText.ThemaTxt TID="6">
+        <Code>ch.Nutzungsplanung</Code>
+        <SubThema>ch.SO.NutzungsplanungSondernutzungsplaene</SubThema>
+        <Titel>
+          <LocalisationCH_V1.MultilingualText>
+            <LocalisedText>
+              <LocalisationCH_V1.LocalisedText>
+                <Language>de</Language>
+                <Text>Sondernutzungspläne</Text>
+              </LocalisationCH_V1.LocalisedText>
+            </LocalisedText>
+          </LocalisationCH_V1.MultilingualText>
+        </Titel>
+      </OeREBKRM_V1_1.CodelistenText.ThemaTxt>
     </OeREBKRM_V1_1.CodelistenText>
+
   </DATASECTION>
 </TRANSFER>
