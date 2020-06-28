@@ -26,9 +26,12 @@ sed -i .bak -E -e 's/(CREATE.*INDEX) (T_ILI2DB)/\1 IF NOT EXISTS \2/' sql/*_ili2
 sed -i .bak -E -e 's/(ALTER TABLE .*T_ILI2DB.* ADD CONSTRAINT .* FOREIGN KEY)/-- \1/' sql/*_ili2.sql
 sed -i .bak -E -e 's/(INSERT INTO .*T_ILI2DB_SETTINGS)/-- \1/' sql/*_ili2.sql
 
+# TODO: Noch keine WMS Tabellen. Da Query nicht ganz ohne sind, wird noch darauf
+# verzichtet.
 # create temporary SQL file for oereb-wms tables
 #./create_oereb-wms_tables.sh > sql/oereb-wms-tables.sql
 
+# TODO: Nachfolgend sind die Merge-Befehle ohne WMS-Tabellen.sql
 # Append all SQL scripts to one single setup script
 #cat sql/setup_original.sql sql/set_role.sql sql/begin_transaction.sql \
 #sql/*_ili1.sql sql/*_ili2.sql \
@@ -39,7 +42,9 @@ cat sql/setup_original.sql sql/set_role.sql sql/begin_transaction.sql \
 sql/*_ili1.sql sql/*_ili2.sql \
 sql/commit_transaction.sql > pgconf/setup.sql
 
-
+# TODO: Nachfolgend sind die Merge-Befehle ohne WMS-Tabellen.sql
+# setup_gdi.sql wird auch für die developments dbs benötigt. Sonst könnte man
+# es für das Testen der neuen Modellen ignorieren.
 # Create a separate single setup script for use in the AGI GDI
 #cat sql/set_role.sql sql/begin_transaction.sql \
 #sql/*_ili1.sql sql/*_ili2.sql \

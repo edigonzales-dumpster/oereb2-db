@@ -1,9 +1,9 @@
-# OEREB Database V 1.x
+# OEREB Database V 2.x
 
 [![Build Status](https://travis-ci.org/oereb/oereb2-db.svg?branch=master)](https://travis-ci.org/oereb/oereb2-db)
 [![Docker Pulls](https://img.shields.io/docker/pulls/sogis/oereb2-db.svg)](https://hub.docker.com/r/sogis/oereb2-db)
 
-Docker image providing a PostGIS database with OEREB tables
+Docker image providing a PostGIS database with OEREB tables (v 2.x)
 
 ## Building and testing the image
 
