@@ -40,7 +40,7 @@ docker run --rm --name oereb-db -p 54321:5432 --hostname primary \
 -e PG_ROOT_PASSWORD=secret \
 -e PG_WRITE_USER=gretl -e PG_WRITE_PASSWORD=gretl \
 -e PG_READ_USER=ogc_server -e PG_READ_PASSWORD=ogc_server \
--v /tmp:/pgdata \
+-v /tmp:/pgdata:delegated \
 sogis/oereb2-db:latest
 ```
 
@@ -54,7 +54,7 @@ docker run --rm --name oereb-db -p 54321:5432 --hostname primary \
 -e PG_ROOT_PASSWORD=secret \
 -e PG_WRITE_USER=gretl -e PG_WRITE_PASSWORD=gretl \
 -e PG_READ_USER=ogc_server -e PG_READ_PASSWORD=ogc_server \
--v ~/crunchy-pgdata:/pgdata \
+-v ~/crunchy-pgdata:/pgdata:delegated \
 sogis/oereb2-db:latest
 ```
 
