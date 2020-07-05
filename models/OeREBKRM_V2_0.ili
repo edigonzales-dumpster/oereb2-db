@@ -1,0 +1,132 @@
+INTERLIS 2.3;
+
+/** Basisdefinitionen für das OEREB-Katasterrahmenmodell
+ */
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRM_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS LocalisationCH_V1,InternationalCodes_V1;
+
+  DOMAIN
+
+    /** Themenspezifische, maschinen-lesbare Art der Eigentumsbeschränkung
+     */
+    ArtEigentumsbeschraenkung = TEXT*40;
+
+    /** Nummer eines Artikels in einer Rechtsvorschrift oder gesetzlichen Grundlage.
+     */
+    ArtikelNummer = TEXT*20;
+
+    Datum = FORMAT INTERLIS.XMLDate "1848-1-1" .. "2100-12-31";
+
+    DokumentTyp = (
+      Rechtsvorschrift,
+      GesetzlicheGrundlage,
+      Hinweis
+    );
+
+    /** gem. DM01 der AV
+     */
+    GrundstueckArt = (
+      Liegenschaft,
+      SelbstRecht(
+        Baurecht,
+        Quellenrecht,
+        Konzessionsrecht,
+        weitere
+      ),
+      Bergwerk
+    );
+
+    /** Wertebereich für Objektidentifikatoren. Der Wert soll mit einem gültigen Internet Domain-Name anfangen, z.B. "ch.admin.sr.720"
+     */
+    OEREBOID = OID TEXT;
+
+    /** Werteliste zur Unterscheidung ob eine Eigentumsbeschränkung in Kraft ist oder nicht.
+     */
+    RechtsStatus = (
+      /** Die Eigentumsbeschränkung ist in Kraft.
+       */
+      inKraft,
+      AenderungMitVorwirkung,
+      AenderungOhneVorwirkung
+    );
+
+    /** Code für ein Thema oder Sub-Thema.
+     * Der Code wird nach folgendem Muster gebildet:
+     * ch.{topic}
+     * ch.{canton}.{topic}
+     * fl.{topic}
+     * ch.{bfsnr}.{topic}
+     * Wobei {canton} das offizielle zwei-stellige Kürzel des Kantons ist, {topic} der Themenname und {bfsnr} die Gemeindenummer gem. BFS.
+     */
+    Thema = TEXT*120;
+
+    /** Unternehmensindentifikation (gemäss. Bundesgesetz über die Unternehmens-Identifikationsnummer SR 431.03) ohne Formatierung z.B. CHE116068369
+     */
+    UID = TEXT*12;
+
+    /** Verweis auf ein Dokument im Web (z.B. eine HTML Seite oder ein PDF-Dokument)
+     */
+    WebReferenz = URI;
+  STRUCTURE ArtikelNummer_ = value : MANDATORY ArtikelNummer; END ArtikelNummer_;
+  STRUCTURE Datum_ = value : MANDATORY Datum; END Datum_;
+  STRUCTURE Thema_ = value : MANDATORY Thema; END Thema_;
+  STRUCTURE WebReferenz_ = value : MANDATORY WebReferenz; END WebReferenz_;
+
+  STRUCTURE LocalisedBlob =
+    Language : InternationalCodes_V1.LanguageCode_ISO639_1;
+    Blob : MANDATORY BLACKBOX BINARY;
+  END LocalisedBlob;
+
+  STRUCTURE LocalisedUri =
+    Language : InternationalCodes_V1.LanguageCode_ISO639_1;
+    Text : MANDATORY URI;
+  END LocalisedUri;
+
+  STRUCTURE MultilingualBlob =
+    LocalisedBlob : BAG {1..*} OF OeREBKRM_V2_0.LocalisedBlob;
+    UNIQUE (LOCAL) LocalisedBlob:Language;
+  END MultilingualBlob;
+
+  STRUCTURE MultilingualUri =
+    LocalisedText : BAG {1..*} OF OeREBKRM_V2_0.LocalisedUri;
+    UNIQUE (LOCAL) LocalisedText:Language;
+  END MultilingualUri;
+
+  /** Qualifzierter Verweis auf ein Thema oder Subthema.
+   */
+  STRUCTURE ThemaRef =
+    Thema : MANDATORY Thema;
+    SubThema : Thema;
+  END ThemaRef;
+
+  TOPIC Amt =
+    OID AS OEREBOID;
+
+    /** Eine organisatorische Einheit innerhalb der öffentlichen Verwaltung, z.B. eine für Geobasisdaten zuständige Stelle.
+     */
+    CLASS Amt =
+      /** Name des Amtes z.B. "Amt für Gemeinden und Raumordnung des Kantons Bern".
+       */
+      Name : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Verweis auf die Website des Amtes z.B. "http://www.jgk.be.ch/jgk/de/index/direktion/organisation/agr.html".
+       */
+      AmtImWeb : OeREBKRM_V2_0.MultilingualUri;
+      /** UID der organisatorischen Einheit
+       */
+      UID : OeREBKRM_V2_0.UID;
+      Zeile1 : TEXT*80;
+      Zeile2 : TEXT*80;
+      Strasse : TEXT*100;
+      Hausnr : TEXT*7;
+      PLZ : TEXT*4;
+      Ort : TEXT*60;
+      UNIQUE UID;
+    END Amt;
+
+  END Amt;
+
+END OeREBKRM_V2_0.

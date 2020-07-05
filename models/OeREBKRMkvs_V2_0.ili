@@ -1,0 +1,161 @@
+INTERLIS 2.3;
+
+/** Zusatzstrukturen zur Verwendung innerhalb der Katasterorganisation des Kantons
+ */
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRMkvs_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS OeREBKRM_V2_0,LocalisationCH_V1,CHAdminCodes_V1,OeREBKRMvs_V2_0;
+
+  TOPIC Konfiguration =
+
+    /** Anzeigetexte für die Aufzählung DokumentTyp
+     */
+    CLASS DokumentTypTxt =
+      Code : MANDATORY OeREBKRM_V2_0.DokumentTyp;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+    END DokumentTypTxt;
+
+    CLASS GemeindeMitOeREBK =
+      /** BFS-Nr. der Gemeinde
+       */
+      Gemeinde : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** In der Gemeinde freigeschaltete OeREB-Themen
+       */
+      Themen : BAG {0..*} OF OeREBKRM_V2_0.ThemaRef;
+      /** Stand der Grundlagedaten (AV)
+       */
+      GrundlagedatenStand : INTERLIS.XMLDateTime;
+      GrundlagedatenMetadaten : URI;
+      /** z.B. "Untereinheit" oder "GB-Kreis"
+       */
+      BezeichnungUntereinheitGrundbuch : TEXT*80;
+      UNIQUE Gemeinde;
+    END GemeindeMitOeREBK;
+
+    CLASS Glossar =
+      /** Abkürzung
+       */
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Beschreibung der Abkürzung
+       */
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+    END Glossar;
+
+    CLASS GrundbuchKreis =
+      Kanton : MANDATORY CHAdminCodes_V1.CHCantonCode;
+      Gemeinde : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** NBIdent gem. AV-Daten
+       */
+      NBIdent : MANDATORY TEXT*12;
+      /** Name des GB-Kreises
+       */
+      Name : MANDATORY TEXT*60;
+      /** SubKreis gem. GB-Daten (eGRISDM/GBDBS)
+       */
+      SubKreis : TEXT*15;
+      /** Los gem. GB-Daten (eGRISDM/GBDBS)
+       */
+      Los : TEXT*15;
+    END GrundbuchKreis;
+
+    /** Anzeigetexte für die Aufzählung GrundstueckArt
+     */
+    CLASS GrundstueckArtTxt =
+      Code : MANDATORY OeREBKRM_V2_0.GrundstueckArt;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+    END GrundstueckArtTxt;
+
+    CLASS Haftungsausschuss =
+      /** Haftungsausschuss
+       */
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+    END Haftungsausschuss;
+
+    CLASS Information =
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Allgemeine Informationen, Eigentumsbeschränkungen im Grundbuch
+       */
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+      /** Ordnungszahl für die Sortierung im Auszug.
+       */
+      AuszugIndex : MANDATORY -1000 .. 1000;
+    END Information;
+
+    CLASS Logo =
+      /** ch.plr, ch, ch.{kanton} oder ch.{bfsnr}
+       */
+      Code : MANDATORY TEXT*60;
+      Bild : MANDATORY OeREBKRM_V2_0.MultilingualBlob;
+      UNIQUE Code;
+    END Logo;
+
+    CLASS MapLayering =
+      VerweisWMS : MANDATORY URI;
+      LayerIndex : MANDATORY -1000 .. 1000;
+      LayerDeckkraft : MANDATORY 0.000 .. 1.000;
+    END MapLayering;
+
+    /** Anzeigetexte für die Aufzählung RechtsStatus
+     */
+    CLASS RechtsStatusTxt =
+      Code : MANDATORY OeREBKRM_V2_0.RechtsStatus;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      UNIQUE Code;
+    END RechtsStatusTxt;
+
+  END Konfiguration;
+
+  /** Zum Zweck der Nachvollziehbarkeit müssen innerhalb der ÖREB-Katasterorganisation des Kantons Metadaten gem. diesem Teilmodell geführt werden.
+   */
+  TOPIC MetadatenKVS
+  EXTENDS OeREBKRM_V2_0.Amt =
+
+    /** Angaben zur Datenlieferung an die Katasterorganisation des Kantons.
+     */
+    CLASS DatenAufnahme =
+      /** Zeitpunkt der Aufnahme oder der letzten Änderung der Daten
+       */
+      Datum : MANDATORY FORMAT INTERLIS.XMLDate "2010-1-1" .. "2050-12-31";
+      /** BasketId oder Dateiname oder vollständiger WFS-Request.
+       */
+      DatensatzIdentifikation : MANDATORY TEXT;
+    END DatenAufnahme;
+
+    ASSOCIATION ZustaendigeStelleDatenAufnahme =
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
+      DatenAufnahme -<> {0..*} DatenAufnahme;
+    END ZustaendigeStelleDatenAufnahme;
+
+  END MetadatenKVS;
+
+  TOPIC Thema =
+    DEPENDS ON OeREBKRMvs_V2_0.Vorschriften;
+
+    /** Anzeigetexte für die Aufzählung Thema
+     */
+    CLASS Thema =
+      Code : MANDATORY OeREBKRM_V2_0.Thema;
+      SubCode : OeREBKRM_V2_0.Thema;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Ordnungszahl für die Sortierung im Auszug. Bei Subthemen definiert die Ordnungszahl die Reihenfolge innerhalb des Themas.
+       */
+      AuszugIndex : MANDATORY -1000 .. 1000;
+      UNIQUE WHERE NOT(DEFINED(SubCode)): Code;
+      UNIQUE WHERE DEFINED(SubCode): Code,SubCode;
+    END Thema;
+
+    ASSOCIATION ThemaGesetz =
+      Thema -- {0..*} Thema;
+      Gesetz (EXTERNAL) -- {0..*} OeREBKRMvs_V2_0.Vorschriften.Dokument;
+      /** Hinweis auf spezifische Artikel.
+       */
+      ArtikelNr : BAG {0..*} OF OeREBKRM_V2_0.ArtikelNummer_;
+    END ThemaGesetz;
+
+  END Thema;
+
+END OeREBKRMkvs_V2_0.
