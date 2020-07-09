@@ -15,6 +15,21 @@ CREATE TABLE arp_npl_oereb.localisedtext (
 CREATE INDEX localisedtext_t_basket_idx ON arp_npl_oereb.localisedtext ( t_basket );
 CREATE INDEX localisedtext_t_datasetname_idx ON arp_npl_oereb.localisedtext ( t_datasetname );
 CREATE INDEX localisedtext_multilingualtext_lclsdtext_idx ON arp_npl_oereb.localisedtext ( multilingualtext_localisedtext );
+-- Localisation_V1.LocalisedMText
+CREATE TABLE arp_npl_oereb.localisedmtext (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,T_Type varchar(60) NOT NULL
+  ,T_Seq bigint NULL
+  ,alanguage varchar(255) NULL
+  ,atext text NOT NULL
+  ,multilingualmtext_localisedtext bigint NULL
+)
+;
+CREATE INDEX localisedmtext_t_basket_idx ON arp_npl_oereb.localisedmtext ( t_basket );
+CREATE INDEX localisedmtext_t_datasetname_idx ON arp_npl_oereb.localisedmtext ( t_datasetname );
+CREATE INDEX localisedmtext_multilingualmtxt_lclsdtext_idx ON arp_npl_oereb.localisedmtext ( multilingualmtext_localisedtext );
 -- Localisation_V1.MultilingualText
 CREATE TABLE arp_npl_oereb.multilingualtext (
   T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
@@ -26,6 +41,31 @@ CREATE TABLE arp_npl_oereb.multilingualtext (
 ;
 CREATE INDEX multilingualtext_t_basket_idx ON arp_npl_oereb.multilingualtext ( t_basket );
 CREATE INDEX multilingualtext_t_datasetname_idx ON arp_npl_oereb.multilingualtext ( t_datasetname );
+-- Localisation_V1.MultilingualMText
+CREATE TABLE arp_npl_oereb.multilingualmtext (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,T_Type varchar(60) NOT NULL
+  ,T_Seq bigint NULL
+)
+;
+CREATE INDEX multilingualmtext_t_basket_idx ON arp_npl_oereb.multilingualmtext ( t_basket );
+CREATE INDEX multilingualmtext_t_datasetname_idx ON arp_npl_oereb.multilingualmtext ( t_datasetname );
+-- OeREBKRM_V2_0.ArtikelNummer_
+CREATE TABLE arp_npl_oereb.artikelnummer_ (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,T_Seq bigint NULL
+  ,avalue varchar(20) NOT NULL
+  ,thema_themagesetz_artikelnr bigint NULL
+)
+;
+CREATE INDEX artikelnummer__t_basket_idx ON arp_npl_oereb.artikelnummer_ ( t_basket );
+CREATE INDEX artikelnummer__t_datasetname_idx ON arp_npl_oereb.artikelnummer_ ( t_datasetname );
+CREATE INDEX artikelnummer__thema_themagesetz_artiklnr_idx ON arp_npl_oereb.artikelnummer_ ( thema_themagesetz_artikelnr );
+COMMENT ON COLUMN arp_npl_oereb.artikelnummer_.thema_themagesetz_artikelnr IS 'Hinweis auf spezifische Artikel.';
 -- OeREBKRM_V2_0.LocalisedBlob
 CREATE TABLE arp_npl_oereb.localisedblob (
   T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
@@ -61,11 +101,13 @@ CREATE TABLE arp_npl_oereb.multilingualblob (
   ,T_datasetname varchar(200) NOT NULL
   ,T_Seq bigint NULL
   ,vorschriften_dokument_dokument bigint NULL
+  ,konfiguration_logo_bild bigint NULL
 )
 ;
 CREATE INDEX multilingualblob_t_basket_idx ON arp_npl_oereb.multilingualblob ( t_basket );
 CREATE INDEX multilingualblob_t_datasetname_idx ON arp_npl_oereb.multilingualblob ( t_datasetname );
 CREATE INDEX multilingualblob_vorschriften_dokmnt_dkment_idx ON arp_npl_oereb.multilingualblob ( vorschriften_dokument_dokument );
+CREATE INDEX multilingualblob_konfiguration_logo_bild_idx ON arp_npl_oereb.multilingualblob ( konfiguration_logo_bild );
 COMMENT ON COLUMN arp_npl_oereb.multilingualblob.vorschriften_dokument_dokument IS 'Das Dokument als PDF-Datei';
 -- OeREBKRM_V2_0.MultilingualUri
 CREATE TABLE arp_npl_oereb.multilingualuri (
@@ -95,13 +137,16 @@ CREATE TABLE arp_npl_oereb.themaref (
   ,thema varchar(120) NOT NULL
   ,subthema varchar(120) NULL
   ,transfrstrkhnwsdfntion_thema bigint NULL
+  ,konfiguratn_gmndmtrebk_themen bigint NULL
 )
 ;
 CREATE INDEX themaref_t_basket_idx ON arp_npl_oereb.themaref ( t_basket );
 CREATE INDEX themaref_t_datasetname_idx ON arp_npl_oereb.themaref ( t_datasetname );
 CREATE INDEX themaref_transfrstrkhnwsdfntn_thema_idx ON arp_npl_oereb.themaref ( transfrstrkhnwsdfntion_thema );
+CREATE INDEX themaref_konfigurtn_gmndmtrbk_thmen_idx ON arp_npl_oereb.themaref ( konfiguratn_gmndmtrebk_themen );
 COMMENT ON TABLE arp_npl_oereb.themaref IS 'Qualifzierter Verweis auf ein Thema oder Subthema.';
 COMMENT ON COLUMN arp_npl_oereb.themaref.transfrstrkhnwsdfntion_thema IS 'Thema falls der Hinweis für ein bestimmtes ÖREB-Thema gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle ÖREB-Themen gilt.';
+COMMENT ON COLUMN arp_npl_oereb.themaref.konfiguratn_gmndmtrebk_themen IS 'In der Gemeinde freigeschaltete OeREB-Themen';
 -- OeREBKRM_V2_0.Amt.Amt
 CREATE TABLE arp_npl_oereb.amt_amt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
@@ -326,6 +371,229 @@ CREATE INDEX transfrstrktrhnwsvrschrift_t_datasetname_idx ON arp_npl_oereb.trans
 CREATE INDEX transfrstrktrhnwsvrschrift_eigentumsbeschraenkung_idx ON arp_npl_oereb.transferstruktur_hinweisvorschrift ( eigentumsbeschraenkung );
 CREATE INDEX transfrstrktrhnwsvrschrift_vorschrift_idx ON arp_npl_oereb.transferstruktur_hinweisvorschrift ( vorschrift );
 COMMENT ON COLUMN arp_npl_oereb.transferstruktur_hinweisvorschrift.vorschrift IS 'Rechtsvorschrift/Hinweis zur Eigentumsbeschränkung';
+-- OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt
+CREATE TABLE arp_npl_oereb.konfiguration_dokumenttyptxt (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,acode varchar(255) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+)
+;
+CREATE INDEX konfiguration_dokmnttyptxt_t_basket_idx ON arp_npl_oereb.konfiguration_dokumenttyptxt ( t_basket );
+CREATE INDEX konfiguration_dokmnttyptxt_t_datasetname_idx ON arp_npl_oereb.konfiguration_dokumenttyptxt ( t_datasetname );
+COMMENT ON TABLE arp_npl_oereb.konfiguration_dokumenttyptxt IS 'Anzeigetexte für die Aufzählung DokumentTyp';
+-- OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK
+CREATE TABLE arp_npl_oereb.konfiguration_gemeindemitoerebk (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,gemeinde integer NOT NULL
+  ,grundlagedatenstand timestamp NULL
+  ,grundlagedatenmetadaten varchar(1023) NULL
+  ,bezeichnunguntereinheitgrundbuch varchar(80) NULL
+)
+;
+CREATE INDEX konfiguration_gemendmtrebk_t_basket_idx ON arp_npl_oereb.konfiguration_gemeindemitoerebk ( t_basket );
+CREATE INDEX konfiguration_gemendmtrebk_t_datasetname_idx ON arp_npl_oereb.konfiguration_gemeindemitoerebk ( t_datasetname );
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_gemeindemitoerebk.gemeinde IS 'BFS-Nr. der Gemeinde';
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_gemeindemitoerebk.grundlagedatenstand IS 'Stand der Grundlagedaten (AV)';
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_gemeindemitoerebk.bezeichnunguntereinheitgrundbuch IS 'z.B. "Untereinheit" oder "GB-Kreis"';
+-- OeREBKRMkvs_V2_0.Konfiguration.Glossar
+CREATE TABLE arp_npl_oereb.konfiguration_glossar (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+  ,inhalt text NULL
+  ,inhalt_de text NULL
+  ,inhalt_fr text NULL
+  ,inhalt_rm text NULL
+  ,inhalt_it text NULL
+  ,inhalt_en text NULL
+)
+;
+CREATE INDEX konfiguration_glossar_t_basket_idx ON arp_npl_oereb.konfiguration_glossar ( t_basket );
+CREATE INDEX konfiguration_glossar_t_datasetname_idx ON arp_npl_oereb.konfiguration_glossar ( t_datasetname );
+-- OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis
+CREATE TABLE arp_npl_oereb.konfiguration_grundbuchkreis (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,kanton varchar(255) NOT NULL
+  ,gemeinde integer NOT NULL
+  ,nbident varchar(12) NOT NULL
+  ,aname varchar(60) NOT NULL
+  ,subkreis varchar(15) NULL
+  ,los varchar(15) NULL
+)
+;
+CREATE INDEX konfiguration_grndbchkreis_t_basket_idx ON arp_npl_oereb.konfiguration_grundbuchkreis ( t_basket );
+CREATE INDEX konfiguration_grndbchkreis_t_datasetname_idx ON arp_npl_oereb.konfiguration_grundbuchkreis ( t_datasetname );
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_grundbuchkreis.nbident IS 'NBIdent gem. AV-Daten';
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_grundbuchkreis.aname IS 'Name des GB-Kreises';
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_grundbuchkreis.subkreis IS 'SubKreis gem. GB-Daten (eGRISDM/GBDBS)';
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_grundbuchkreis.los IS 'Los gem. GB-Daten (eGRISDM/GBDBS)';
+-- OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt
+CREATE TABLE arp_npl_oereb.konfiguration_grundstueckarttxt (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,acode varchar(255) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+)
+;
+CREATE INDEX konfiguratin_grndstckrttxt_t_basket_idx ON arp_npl_oereb.konfiguration_grundstueckarttxt ( t_basket );
+CREATE INDEX konfiguratin_grndstckrttxt_t_datasetname_idx ON arp_npl_oereb.konfiguration_grundstueckarttxt ( t_datasetname );
+COMMENT ON TABLE arp_npl_oereb.konfiguration_grundstueckarttxt IS 'Anzeigetexte für die Aufzählung GrundstueckArt';
+-- OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss
+CREATE TABLE arp_npl_oereb.konfiguration_haftungsausschuss (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+  ,inhalt text NULL
+  ,inhalt_de text NULL
+  ,inhalt_fr text NULL
+  ,inhalt_rm text NULL
+  ,inhalt_it text NULL
+  ,inhalt_en text NULL
+)
+;
+CREATE INDEX konfiguratin_hftngssschuss_t_basket_idx ON arp_npl_oereb.konfiguration_haftungsausschuss ( t_basket );
+CREATE INDEX konfiguratin_hftngssschuss_t_datasetname_idx ON arp_npl_oereb.konfiguration_haftungsausschuss ( t_datasetname );
+-- OeREBKRMkvs_V2_0.Konfiguration.Information
+CREATE TABLE arp_npl_oereb.konfiguration_information (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+  ,inhalt text NULL
+  ,inhalt_de text NULL
+  ,inhalt_fr text NULL
+  ,inhalt_rm text NULL
+  ,inhalt_it text NULL
+  ,inhalt_en text NULL
+  ,auszugindex integer NOT NULL
+)
+;
+CREATE INDEX konfiguration_information_t_basket_idx ON arp_npl_oereb.konfiguration_information ( t_basket );
+CREATE INDEX konfiguration_information_t_datasetname_idx ON arp_npl_oereb.konfiguration_information ( t_datasetname );
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_information.auszugindex IS 'Ordnungszahl für die Sortierung im Auszug.';
+-- OeREBKRMkvs_V2_0.Konfiguration.Logo
+CREATE TABLE arp_npl_oereb.konfiguration_logo (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,acode varchar(60) NOT NULL
+)
+;
+CREATE INDEX konfiguration_logo_t_basket_idx ON arp_npl_oereb.konfiguration_logo ( t_basket );
+CREATE INDEX konfiguration_logo_t_datasetname_idx ON arp_npl_oereb.konfiguration_logo ( t_datasetname );
+COMMENT ON COLUMN arp_npl_oereb.konfiguration_logo.acode IS 'ch.plr, ch, ch.{kanton} oder ch.{bfsnr}';
+-- OeREBKRMkvs_V2_0.Konfiguration.MapLayering
+CREATE TABLE arp_npl_oereb.konfiguration_maplayering (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,verweiswms varchar(1023) NOT NULL
+  ,layerindex integer NOT NULL
+  ,layerdeckkraft decimal(4,3) NOT NULL
+)
+;
+CREATE INDEX konfiguration_maplayering_t_basket_idx ON arp_npl_oereb.konfiguration_maplayering ( t_basket );
+CREATE INDEX konfiguration_maplayering_t_datasetname_idx ON arp_npl_oereb.konfiguration_maplayering ( t_datasetname );
+-- OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt
+CREATE TABLE arp_npl_oereb.konfiguration_rechtsstatustxt (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,acode varchar(255) NOT NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+)
+;
+CREATE INDEX konfiguration_rchtssttstxt_t_basket_idx ON arp_npl_oereb.konfiguration_rechtsstatustxt ( t_basket );
+CREATE INDEX konfiguration_rchtssttstxt_t_datasetname_idx ON arp_npl_oereb.konfiguration_rechtsstatustxt ( t_datasetname );
+COMMENT ON TABLE arp_npl_oereb.konfiguration_rechtsstatustxt IS 'Anzeigetexte für die Aufzählung RechtsStatus';
+-- OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme
+CREATE TABLE arp_npl_oereb.metadatenkvs_datenaufnahme (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,datum date NOT NULL
+  ,datensatzidentifikation text NOT NULL
+  ,zustaendigestelle bigint NOT NULL
+)
+;
+CREATE INDEX metadatenkvs_datenaufnahme_t_basket_idx ON arp_npl_oereb.metadatenkvs_datenaufnahme ( t_basket );
+CREATE INDEX metadatenkvs_datenaufnahme_t_datasetname_idx ON arp_npl_oereb.metadatenkvs_datenaufnahme ( t_datasetname );
+CREATE INDEX metadatenkvs_datenaufnahme_zustaendigestelle_idx ON arp_npl_oereb.metadatenkvs_datenaufnahme ( zustaendigestelle );
+COMMENT ON TABLE arp_npl_oereb.metadatenkvs_datenaufnahme IS 'Angaben zur Datenlieferung an die Katasterorganisation des Kantons.';
+COMMENT ON COLUMN arp_npl_oereb.metadatenkvs_datenaufnahme.datum IS 'Zeitpunkt der Aufnahme oder der letzten Änderung der Daten';
+COMMENT ON COLUMN arp_npl_oereb.metadatenkvs_datenaufnahme.datensatzidentifikation IS 'BasketId oder Dateiname oder vollständiger WFS-Request.';
+-- OeREBKRMkvs_V2_0.Thema.Thema
+CREATE TABLE arp_npl_oereb.thema_thema (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,acode varchar(120) NOT NULL
+  ,subcode varchar(120) NULL
+  ,titel text NULL
+  ,titel_de text NULL
+  ,titel_fr text NULL
+  ,titel_rm text NULL
+  ,titel_it text NULL
+  ,titel_en text NULL
+  ,auszugindex integer NOT NULL
+)
+;
+CREATE INDEX thema_thema_t_basket_idx ON arp_npl_oereb.thema_thema ( t_basket );
+CREATE INDEX thema_thema_t_datasetname_idx ON arp_npl_oereb.thema_thema ( t_datasetname );
+COMMENT ON TABLE arp_npl_oereb.thema_thema IS 'Anzeigetexte für die Aufzählung Thema';
+COMMENT ON COLUMN arp_npl_oereb.thema_thema.auszugindex IS 'Ordnungszahl für die Sortierung im Auszug. Bei Subthemen definiert die Ordnungszahl die Reihenfolge innerhalb des Themas.';
+-- OeREBKRMkvs_V2_0.Thema.ThemaGesetz
+CREATE TABLE arp_npl_oereb.thema_themagesetz (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('arp_npl_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,thema bigint NOT NULL
+  ,gesetz bigint NOT NULL
+)
+;
+CREATE INDEX thema_themagesetz_t_basket_idx ON arp_npl_oereb.thema_themagesetz ( t_basket );
+CREATE INDEX thema_themagesetz_t_datasetname_idx ON arp_npl_oereb.thema_themagesetz ( t_datasetname );
+CREATE INDEX thema_themagesetz_thema_idx ON arp_npl_oereb.thema_themagesetz ( thema );
+CREATE INDEX thema_themagesetz_gesetz_idx ON arp_npl_oereb.thema_themagesetz ( gesetz );
 CREATE TABLE arp_npl_oereb.T_ILI2DB_BASKET (
   T_Id bigint PRIMARY KEY
   ,dataset bigint NULL
@@ -384,6 +652,15 @@ CREATE TABLE arp_npl_oereb.T_ILI2DB_MODEL (
   ,PRIMARY KEY (modelName,iliversion)
 )
 ;
+CREATE TABLE arp_npl_oereb.chcantoncode (
+  itfCode integer PRIMARY KEY
+  ,iliCode varchar(1024) NOT NULL
+  ,seq integer NULL
+  ,inactive boolean NOT NULL
+  ,dispName varchar(250) NOT NULL
+  ,description varchar(1024) NULL
+)
+;
 CREATE TABLE arp_npl_oereb.dokumenttyp (
   itfCode integer PRIMARY KEY
   ,iliCode varchar(1024) NOT NULL
@@ -402,7 +679,7 @@ CREATE TABLE arp_npl_oereb.languagecode_iso639_1 (
   ,description varchar(1024) NULL
 )
 ;
-CREATE TABLE arp_npl_oereb.chcantoncode (
+CREATE TABLE arp_npl_oereb.rechtsstatus (
   itfCode integer PRIMARY KEY
   ,iliCode varchar(1024) NOT NULL
   ,seq integer NULL
@@ -411,7 +688,7 @@ CREATE TABLE arp_npl_oereb.chcantoncode (
   ,description varchar(1024) NULL
 )
 ;
-CREATE TABLE arp_npl_oereb.rechtsstatus (
+CREATE TABLE arp_npl_oereb.grundstueckart (
   itfCode integer PRIMARY KEY
   ,iliCode varchar(1024) NOT NULL
   ,seq integer NULL
@@ -430,7 +707,7 @@ CREATE TABLE arp_npl_oereb.T_ILI2DB_ATTRNAME (
   ,SqlName varchar(1024) NOT NULL
   ,ColOwner varchar(1024) NOT NULL
   ,Target varchar(1024) NULL
-  ,PRIMARY KEY (SqlName,ColOwner)
+  ,PRIMARY KEY (ColOwner,SqlName)
 )
 ;
 CREATE TABLE arp_npl_oereb.T_ILI2DB_COLUMN_PROP (
@@ -455,19 +732,26 @@ CREATE TABLE arp_npl_oereb.T_ILI2DB_META_ATTRS (
 ;
 ALTER TABLE arp_npl_oereb.localisedtext ADD CONSTRAINT localisedtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.localisedtext ADD CONSTRAINT localisedtext_multilingualtext_lclsdtext_fkey FOREIGN KEY ( multilingualtext_localisedtext ) REFERENCES arp_npl_oereb.multilingualtext DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.localisedmtext ADD CONSTRAINT localisedmtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.localisedmtext ADD CONSTRAINT localisedmtext_multilingualmtxt_lclsdtext_fkey FOREIGN KEY ( multilingualmtext_localisedtext ) REFERENCES arp_npl_oereb.multilingualmtext DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualtext ADD CONSTRAINT multilingualtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.multilingualmtext ADD CONSTRAINT multilingualmtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.artikelnummer_ ADD CONSTRAINT artikelnummer__T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.artikelnummer_ ADD CONSTRAINT artikelnummer__thema_themagesetz_artiklnr_fkey FOREIGN KEY ( thema_themagesetz_artikelnr ) REFERENCES arp_npl_oereb.thema_themagesetz DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.localisedblob ADD CONSTRAINT localisedblob_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.localisedblob ADD CONSTRAINT localisedblob_multilingualblob_lclsdblob_fkey FOREIGN KEY ( multilingualblob_localisedblob ) REFERENCES arp_npl_oereb.multilingualblob DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.localiseduri ADD CONSTRAINT localiseduri_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.localiseduri ADD CONSTRAINT localiseduri_multilingualuri_loclsdtext_fkey FOREIGN KEY ( multilingualuri_localisedtext ) REFERENCES arp_npl_oereb.multilingualuri DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualblob ADD CONSTRAINT multilingualblob_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualblob ADD CONSTRAINT multilingualblob_vorschriften_dokmnt_dkment_fkey FOREIGN KEY ( vorschriften_dokument_dokument ) REFERENCES arp_npl_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.multilingualblob ADD CONSTRAINT multilingualblob_konfiguration_logo_bild_fkey FOREIGN KEY ( konfiguration_logo_bild ) REFERENCES arp_npl_oereb.konfiguration_logo DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualuri ADD CONSTRAINT multilingualuri_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualuri ADD CONSTRAINT multilingualuri_amt_amt_amtimweb_fkey FOREIGN KEY ( amt_amt_amtimweb ) REFERENCES arp_npl_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualuri ADD CONSTRAINT multilingualuri_vorschriften_dkmnt_txtmweb_fkey FOREIGN KEY ( vorschriften_dokument_textimweb ) REFERENCES arp_npl_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.multilingualuri ADD CONSTRAINT multilingualuri_transfrstrkstsdnst_vrwswms_fkey FOREIGN KEY ( transfrstrkstllngsdnst_verweiswms ) REFERENCES arp_npl_oereb.transferstruktur_darstellungsdienst DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.themaref ADD CONSTRAINT themaref_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.themaref ADD CONSTRAINT themaref_transfrstrkhnwsdfntn_thema_fkey FOREIGN KEY ( transfrstrkhnwsdfntion_thema ) REFERENCES arp_npl_oereb.transferstruktur_hinweisdefinition DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.themaref ADD CONSTRAINT themaref_konfigurtn_gmndmtrbk_thmen_fkey FOREIGN KEY ( konfiguratn_gmndmtrebk_themen ) REFERENCES arp_npl_oereb.konfiguration_gemeindemitoerebk DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.amt_amt ADD CONSTRAINT amt_amt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_gemeinde_check CHECK( gemeinde BETWEEN 1 AND 9999);
@@ -495,6 +779,28 @@ ALTER TABLE arp_npl_oereb.transferstruktur_hinweisdefinitiondokument ADD CONSTRA
 ALTER TABLE arp_npl_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_eigentumsbeschraenkung_fkey FOREIGN KEY ( eigentumsbeschraenkung ) REFERENCES arp_npl_oereb.transferstruktur_eigentumsbeschraenkung DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_vorschrift_fkey FOREIGN KEY ( vorschrift ) REFERENCES arp_npl_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_dokumenttyptxt ADD CONSTRAINT konfiguration_dokmnttyptxt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_gemeindemitoerebk ADD CONSTRAINT konfiguration_gemendmtrebk_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_gemeindemitoerebk ADD CONSTRAINT konfiguration_gemndmtrebk_gemeinde_check CHECK( gemeinde BETWEEN 1 AND 9999);
+ALTER TABLE arp_npl_oereb.konfiguration_glossar ADD CONSTRAINT konfiguration_glossar_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_grundbuchkreis ADD CONSTRAINT konfiguration_grndbchkreis_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_grundbuchkreis ADD CONSTRAINT konfiguratin_grndbchkreis_gemeinde_check CHECK( gemeinde BETWEEN 1 AND 9999);
+ALTER TABLE arp_npl_oereb.konfiguration_grundstueckarttxt ADD CONSTRAINT konfiguratin_grndstckrttxt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_haftungsausschuss ADD CONSTRAINT konfiguratin_hftngssschuss_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_information ADD CONSTRAINT konfiguration_information_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_information ADD CONSTRAINT konfiguration_information_auszugindex_check CHECK( auszugindex BETWEEN -1000 AND 1000);
+ALTER TABLE arp_npl_oereb.konfiguration_logo ADD CONSTRAINT konfiguration_logo_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_maplayering ADD CONSTRAINT konfiguration_maplayering_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.konfiguration_maplayering ADD CONSTRAINT konfiguration_maplayering_layerindex_check CHECK( layerindex BETWEEN -1000 AND 1000);
+ALTER TABLE arp_npl_oereb.konfiguration_maplayering ADD CONSTRAINT konfiguration_maplayering_layerdeckkraft_check CHECK( layerdeckkraft BETWEEN 0.0 AND 1.0);
+ALTER TABLE arp_npl_oereb.konfiguration_rechtsstatustxt ADD CONSTRAINT konfiguration_rchtssttstxt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.metadatenkvs_datenaufnahme ADD CONSTRAINT metadatenkvs_datenaufnahme_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.metadatenkvs_datenaufnahme ADD CONSTRAINT metadatenkvs_datenaufnahme_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES arp_npl_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.thema_thema ADD CONSTRAINT thema_thema_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.thema_thema ADD CONSTRAINT thema_thema_auszugindex_check CHECK( auszugindex BETWEEN -1000 AND 1000);
+ALTER TABLE arp_npl_oereb.thema_themagesetz ADD CONSTRAINT thema_themagesetz_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.thema_themagesetz ADD CONSTRAINT thema_themagesetz_thema_fkey FOREIGN KEY ( thema ) REFERENCES arp_npl_oereb.thema_thema DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE arp_npl_oereb.thema_themagesetz ADD CONSTRAINT thema_themagesetz_gesetz_fkey FOREIGN KEY ( gesetz ) REFERENCES arp_npl_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE arp_npl_oereb.T_ILI2DB_BASKET ADD CONSTRAINT T_ILI2DB_BASKET_dataset_fkey FOREIGN KEY ( dataset ) REFERENCES arp_npl_oereb.T_ILI2DB_DATASET DEFERRABLE INITIALLY DEFERRED;
 CREATE UNIQUE INDEX T_ILI2DB_DATASET_datasetName_key ON arp_npl_oereb.T_ILI2DB_DATASET (datasetName)
 ;
@@ -502,133 +808,193 @@ ALTER TABLE arp_npl_oereb.T_ILI2DB_IMPORT_BASKET ADD CONSTRAINT T_ILI2DB_IMPORT_
 ALTER TABLE arp_npl_oereb.T_ILI2DB_IMPORT_BASKET ADD CONSTRAINT T_ILI2DB_IMPORT_BASKET_basket_fkey FOREIGN KEY ( basket ) REFERENCES arp_npl_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 CREATE UNIQUE INDEX T_ILI2DB_MODEL_modelName_iliversion_key ON arp_npl_oereb.T_ILI2DB_MODEL (modelName,iliversion)
 ;
-CREATE UNIQUE INDEX T_ILI2DB_ATTRNAME_SqlName_ColOwner_key ON arp_npl_oereb.T_ILI2DB_ATTRNAME (SqlName,ColOwner)
+CREATE UNIQUE INDEX T_ILI2DB_ATTRNAME_ColOwner_SqlName_key ON arp_npl_oereb.T_ILI2DB_ATTRNAME (ColOwner,SqlName)
 ;
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.MultilingualText','multilingualtext');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.ThemaRef','themaref');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','transferstruktur_eigentumsbeschraenkunglegende');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('InternationalCodes_V1.LanguageCode_ISO639_1','languagecode_iso639_1');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument','vorschriften_zustaendigestelledokument');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift','transferstruktur_hinweisvorschrift');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition','transferstruktur_hinweisdefinition');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme','metadatenkvs_datenaufnahme');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.MultilingualBlob','multilingualblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK','konfiguration_gemeindemitoerebk');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.ZustaendigeStelleDatenAufnahme','metadatenkvs_zustaendigestelledatenaufnahme');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.LocalisedBlob','localisedblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.ArtikelNummer_','artikelnummer_');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis','konfiguration_grundbuchkreis');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt','konfiguration_grundstueckarttxt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Logo','konfiguration_logo');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.MultilingualText','localisationch_v1_multilingualtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.LocalisedText','localisationch_v1_localisedtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','transferstruktur_darstellungsdiensteigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.Amt.Amt','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag','transferstruktur_legendeeintrag');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle','transferstruktur_hinweisdefinitionzustaendigestelle');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.MultilingualText','multilingualtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','transferstruktur_eigentumsbeschraenkunglegende');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('InternationalCodes_V1.LanguageCode_ISO639_1','languagecode_iso639_1');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.GrundstueckArt','grundstueckart');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.MultilingualMText','localisationch_v1_multilingualmtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema','thema_thema');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.LocalisedText','localisedtext');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument','transferstruktur_hinweisdefinitiondokument');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst','transferstruktur_legendedarstellungsdienst');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','transferstruktur_zustaendigestelleeigentumsbeschraenkung');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung','transferstruktur_geometrieeigentumsbeschraenkung');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.MultilingualBlob','multilingualblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.LocalisedMText','localisedmtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss','konfiguration_haftungsausschuss');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.LocalisedUri','localiseduri');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung','transferstruktur_eigentumsbeschraenkung');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst','transferstruktur_darstellungsdienst');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.RechtsStatus','rechtsstatus');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung','transferstruktur_grundlageverfeinerung');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.LocalisedBlob','localisedblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt','konfiguration_rechtsstatustxt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar','konfiguration_glossar');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz','thema_themagesetz');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information','konfiguration_information');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie','transferstruktur_geometrie');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.LocalisedMText','localisationch_v1_localisedmtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt','konfiguration_dokumenttyptxt');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.MultilingualUri','multilingualuri');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.MultilingualText','localisationch_v1_multilingualtext');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument','vorschriften_dokument');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.LocalisedText','localisationch_v1_localisedtext');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','transferstruktur_darstellungsdiensteigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.MultilingualMText','multilingualmtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering','konfiguration_maplayering');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.DokumentTyp','dokumenttyp');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.Amt.Amt','amt_amt');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag','transferstruktur_legendeeintrag');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('CHAdminCodes_V1.CHCantonCode','chcantoncode');
-INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle','transferstruktur_hinweisdefinitionzustaendigestelle');
 INSERT INTO arp_npl_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie','transferstruktur_zustaendigestellegeometrie');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.TextImWeb','vorschriften_dokument_textimweb','multilingualuri','vorschriften_dokument');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolLinie','symbollinie','transferstruktur_legendeeintrag',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung.ZustaendigeStelle','zustaendigestelle','transferstruktur_eigentumsbeschraenkung','amt_amt');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertBis','publiziertbis','transferstruktur_geometrie',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.NurInGemeinde','nuringemeinde','vorschriften_dokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie.ZustaendigeStelle','zustaendigestelle','transferstruktur_geometrie','amt_amt');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ThemaRef.SubThema','subthema','themaref',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Ort','ort','amt_amt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SubThema','subthema','transferstruktur_legendeeintrag',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle.ZustaendigeStelle','zustaendigestelle','transferstruktur_hinweisdefinition','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt.Titel','titel','konfiguration_dokumenttyptxt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.Los','los','konfiguration_grundbuchkreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering.VerweisWMS','verweiswms','konfiguration_maplayering',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Kanton','kanton','vorschriften_dokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Kanton','kanton','transferstruktur_hinweisdefinition',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ArtikelNummer_.value','avalue','artikelnummer_',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument.HinweisDefinition','hinweisdefinition','transferstruktur_hinweisdefinitiondokument','transferstruktur_hinweisdefinition');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Rechtsstatus','rechtsstatus','vorschriften_dokument',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Flaeche_LV95','flaeche_lv95','transferstruktur_geometrie',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung.Verfeinerung','verfeinerung','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering.LayerIndex','layerindex','konfiguration_maplayering',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolPunkt','symbolpunkt','transferstruktur_legendeeintrag',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedUri.Text','atext','localiseduri',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Linie_LV95','linie_lv95','transferstruktur_geometrie',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Thema','thema','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument.Dokument','dokument','transferstruktur_hinweisdefinitiondokument','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema.SubCode','subcode','thema_thema',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Name','aname','amt_amt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.publiziertBis','publiziertbis','vorschriften_dokument',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.OffizielleNr','offiziellenr','vorschriften_dokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Rechtsstatus','rechtsstatus','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.UID','auid','amt_amt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Titel','titel','vorschriften_dokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedText.Text','atext','localisedtext',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.AmtImWeb','amt_amt_amtimweb','multilingualuri','amt_amt');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedUri.Language','alanguage','localiseduri',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument.ZustaendigeStelle','zustaendigestelle','vorschriften_dokument','amt_amt');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCode','artcode','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema.Code','acode','thema_thema',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Logo.Bild','konfiguration_logo_bild','multilingualblob','konfiguration_logo');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar.Titel','titel','konfiguration_glossar',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss.Titel','titel','konfiguration_haftungsausschuss',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.NBIdent','nbident','konfiguration_grundbuchkreis',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.MetadatenGeobasisdaten','metadatengeobasisdaten','transferstruktur_geometrie',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile2','zeile2','amt_amt',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Strasse','strasse','amt_amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.MultilingualMText.LocalisedText','multilingualmtext_localisedtext','localisedmtext','multilingualmtext');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema.Titel','titel','thema_thema',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Dokument','vorschriften_dokument_dokument','multilingualblob','vorschriften_dokument');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.publiziertAb','publiziertab','vorschriften_dokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedBlob.Language','alanguage','localisedblob',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolFlaeche','symbolflaeche','transferstruktur_legendeeintrag',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Gemeinde','gemeinde','vorschriften_dokument',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.MultilingualText.LocalisedText','multilingualtext_localisedtext','localisedtext','multilingualtext');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertAb','publiziertab','transferstruktur_geometrie',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualBlob.LocalisedBlob','multilingualblob_localisedblob','localisedblob','multilingualblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedMText.Language','alanguage','localisedmtext',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK.GrundlagedatenMetadaten','grundlagedatenmetadaten','konfiguration_gemeindemitoerebk',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt.Code','acode','konfiguration_dokumenttyptxt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar.Inhalt','inhalt','konfiguration_glossar',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering.LayerDeckkraft','layerdeckkraft','konfiguration_maplayering',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Hausnr','hausnr','amt_amt',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.publiziertAb','publiziertab','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst.VerweisWMS','transfrstrkstllngsdnst_verweiswms','multilingualuri','transferstruktur_darstellungsdienst');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedMText.Text','atext','localisedmtext',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung.DarstellungsDienst','darstellungsdienst','transferstruktur_eigentumsbeschraenkung','transferstruktur_darstellungsdienst');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.Thema','thema','transferstruktur_legendeeintrag',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung.Grundlage','grundlage','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Gemeinde','gemeinde','transferstruktur_hinweisdefinition',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ThemaRef.Thema','thema','themaref',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift.Vorschrift','vorschrift','transferstruktur_hinweisvorschrift','vorschriften_dokument');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.LegendeText','legendetext','transferstruktur_legendeeintrag',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualUri.LocalisedText','multilingualuri_localisedtext','localiseduri','multilingualuri');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_geometrie','transferstruktur_eigentumsbeschraenkung');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst.DarstellungsDienst','darstellungsdienst','transferstruktur_legendeeintrag','transferstruktur_darstellungsdienst');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.publiziertBis','publiziertbis','transferstruktur_eigentumsbeschraenkung',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Typ','typ','vorschriften_dokument',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.PLZ','plz','amt_amt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_hinweisvorschrift','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Abkuerzung','abkuerzung','vorschriften_dokument',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Rechtsstatus','rechtsstatus','transferstruktur_geometrie',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.SubThema','subthema','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz.Thema','thema','thema_themagesetz','thema_thema');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCodeliste','artcodeliste','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile1','zeile1','amt_amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.TextImWeb','vorschriften_dokument_textimweb','multilingualuri','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolLinie','symbollinie','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung.ZustaendigeStelle','zustaendigestelle','transferstruktur_eigentumsbeschraenkung','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertBis','publiziertbis','transferstruktur_geometrie',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie.ZustaendigeStelle','zustaendigestelle','transferstruktur_geometrie','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle.ZustaendigeStelle','zustaendigestelle','transferstruktur_hinweisdefinition','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Logo.Code','acode','konfiguration_logo',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt.Titel','titel','konfiguration_grundstueckarttxt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Kanton','kanton','transferstruktur_hinweisdefinition',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Rechtsstatus','rechtsstatus','vorschriften_dokument',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.Name','aname','konfiguration_grundbuchkreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.Gemeinde','gemeinde','konfiguration_grundbuchkreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Linie_LV95','linie_lv95','transferstruktur_geometrie',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme.DatensatzIdentifikation','datensatzidentifikation','metadatenkvs_datenaufnahme',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK.Themen','konfiguratn_gmndmtrebk_themen','themaref','konfiguration_gemeindemitoerebk');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Thema','thema','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument.Dokument','dokument','transferstruktur_hinweisdefinitiondokument','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss.Inhalt','inhalt','konfiguration_haftungsausschuss',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Rechtsstatus','rechtsstatus','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.UID','auid','amt_amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedText.Text','atext','localisedtext',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK.Gemeinde','gemeinde','konfiguration_gemeindemitoerebk',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information.AuszugIndex','auszugindex','konfiguration_information',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.AmtImWeb','amt_amt_amtimweb','multilingualuri','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedUri.Language','alanguage','localiseduri',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument.ZustaendigeStelle','zustaendigestelle','vorschriften_dokument','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCode','artcode','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile2','zeile2','amt_amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Strasse','strasse','amt_amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedBlob.Language','alanguage','localisedblob',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolFlaeche','symbolflaeche','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertAb','publiziertab','transferstruktur_geometrie',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.ZustaendigeStelleDatenAufnahme.ZustaendigeStelle','zustaendigestelle','metadatenkvs_datenaufnahme','amt_amt');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt.Code','acode','konfiguration_rechtsstatustxt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualBlob.LocalisedBlob','multilingualblob_localisedblob','localisedblob','multilingualblob');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme.Datum','datum','metadatenkvs_datenaufnahme',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.publiziertAb','publiziertab','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst.VerweisWMS','transfrstrkstllngsdnst_verweiswms','multilingualuri','transferstruktur_darstellungsdienst');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.Kanton','kanton','konfiguration_grundbuchkreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema.AuszugIndex','auszugindex','thema_thema',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK.BezeichnungUntereinheitGrundbuch','bezeichnunguntereinheitgrundbuch','konfiguration_gemeindemitoerebk',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.Thema','thema','transferstruktur_legendeeintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ThemaRef.Thema','thema','themaref',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information.Titel','titel','konfiguration_information',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualUri.LocalisedText','multilingualuri_localisedtext','localiseduri','multilingualuri');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_geometrie','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz.Gesetz','gesetz','thema_themagesetz','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information.Inhalt','inhalt','konfiguration_information',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis.SubKreis','subkreis','konfiguration_grundbuchkreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz.ArtikelNr','thema_themagesetz_artikelnr','artikelnummer_','thema_themagesetz');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK.GrundlagedatenStand','grundlagedatenstand','konfiguration_gemeindemitoerebk',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Abkuerzung','abkuerzung','vorschriften_dokument',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt.Code','acode','konfiguration_grundstueckarttxt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Punkt_LV95','punkt_lv95','transferstruktur_geometrie',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedBlob.Blob','ablob','localisedblob',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende.Legende','legende','transferstruktur_eigentumsbeschraenkung','transferstruktur_legendeeintrag');
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedText.Language','alanguage','localisedtext',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Thema','transfrstrkhnwsdfntion_thema','themaref','transferstruktur_hinweisdefinition');
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCodeliste','artcodeliste','transferstruktur_legendeeintrag',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile1','zeile1','amt_amt',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.MultilingualText','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt.Titel','titel','konfiguration_rechtsstatustxt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.ThemaRef','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.OffizielleNr','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information.Inhalt','ch.ehi.ili2db.multilingualTrafo','expand');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument','ch.ehi.ili2db.inheritance','embedded');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.LocalisedText','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.MultilingualBlob','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.LocalisedUri','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.Amt.Amt.Name','ch.ehi.ili2db.multilingualTrafo','expand');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Abkuerzung','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.ZustaendigeStelleDatenAufnahme','ch.ehi.ili2db.inheritance','embedded');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.LocalisedBlob','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.ArtikelNummer_','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.LegendeText','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.MultilingualUri','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss.Inhalt','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Logo','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.MultilingualText','ch.ehi.ili2db.inheritance','superClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.LocalisedText','ch.ehi.ili2db.inheritance','superClass');
@@ -636,34 +1002,113 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.Amt.Amt','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.MultilingualText','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.MultilingualMText','ch.ehi.ili2db.inheritance','superClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.OffizielleNr','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar.Inhalt','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.LocalisedText','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.LocalisedMText','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.LocalisedUri','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.LocalisedMText','ch.ehi.ili2db.inheritance','superClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.MultilingualUri','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.MultilingualMText','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedUri',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.MultilingualText',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.ThemaRef',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.LocalisedText',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.MultilingualUri',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.Amt.Amt',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualText','Localisation_V1.MultilingualText');
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedBlob',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.LocalisedText','Localisation_V1.LocalisedText');
 INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung',NULL);
-INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.MultilingualText',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.LocalisedText',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedUri',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.LocalisedMText','Localisation_V1.LocalisedMText');
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.Amt.Amt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.DokumentTypTxt',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.DatenAufnahme',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.MetadatenKVS.ZustaendigeStelleDatenAufnahme',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Information',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Thema.Thema',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.LocalisedText','Localisation_V1.LocalisedText');
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GemeindeMitOeREBK',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Glossar',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundbuchKreis',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.LocalisedMText',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedBlob',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.ArtikelNummer_',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.MultilingualBlob',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Logo',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.MultilingualMText',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.ThemaRef',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.RechtsStatusTxt',NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Thema.ThemaGesetz',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.Haftungsausschuss',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.MapLayering',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualMText','Localisation_V1.MultilingualMText');
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.MultilingualUri',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle',NULL);
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualText','Localisation_V1.MultilingualText');
+INSERT INTO arp_npl_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMkvs_V2_0.Konfiguration.GrundstueckArtTxt',NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'ZH',0,'ZH',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BE',1,'BE',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'LU',2,'LU',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'UR',3,'UR',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SZ',4,'SZ',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'OW',5,'OW',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'NW',6,'NW',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GL',7,'GL',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'ZG',8,'ZG',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'FR',9,'FR',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SO',10,'SO',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BS',11,'BS',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BL',12,'BL',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SH',13,'SH',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AR',14,'AR',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AI',15,'AI',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SG',16,'SG',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GR',17,'GR',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AG',18,'AG',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'TG',19,'TG',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'TI',20,'TI',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'VD',21,'VD',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'VS',22,'VS',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'NE',23,'NE',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GE',24,'GE',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'JU',25,'JU',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'FL',26,'FL',FALSE,NULL);
+INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'CH',27,'CH',FALSE,NULL);
 INSERT INTO arp_npl_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Rechtsvorschrift',0,'Rechtsvorschrift',FALSE,NULL);
 INSERT INTO arp_npl_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GesetzlicheGrundlage',1,'GesetzlicheGrundlage',FALSE,NULL);
 INSERT INTO arp_npl_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Hinweis',2,'Hinweis',FALSE,NULL);
@@ -806,39 +1251,18 @@ INSERT INTO arp_npl_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,in
 INSERT INTO arp_npl_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'za',136,'za',FALSE,NULL);
 INSERT INTO arp_npl_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'zh',137,'zh',FALSE,NULL);
 INSERT INTO arp_npl_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'zu',138,'zu',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'ZH',0,'ZH',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BE',1,'BE',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'LU',2,'LU',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'UR',3,'UR',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SZ',4,'SZ',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'OW',5,'OW',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'NW',6,'NW',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GL',7,'GL',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'ZG',8,'ZG',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'FR',9,'FR',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SO',10,'SO',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BS',11,'BS',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'BL',12,'BL',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SH',13,'SH',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AR',14,'AR',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AI',15,'AI',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SG',16,'SG',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GR',17,'GR',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AG',18,'AG',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'TG',19,'TG',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'TI',20,'TI',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'VD',21,'VD',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'VS',22,'VS',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'NE',23,'NE',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GE',24,'GE',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'JU',25,'JU',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'FL',26,'FL',FALSE,NULL);
-INSERT INTO arp_npl_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'CH',27,'CH',FALSE,NULL);
 INSERT INTO arp_npl_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'inKraft',0,'inKraft',FALSE,'Die Eigentumsbeschränkung ist in Kraft.');
 INSERT INTO arp_npl_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AenderungMitVorwirkung',1,'AenderungMitVorwirkung',FALSE,NULL);
 INSERT INTO arp_npl_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AenderungOhneVorwirkung',2,'AenderungOhneVorwirkung',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Liegenschaft',0,'Liegenschaft',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SelbstRecht.Baurecht',1,'SelbstRecht.Baurecht',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SelbstRecht.Quellenrecht',2,'SelbstRecht.Quellenrecht',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SelbstRecht.Konzessionsrecht',3,'SelbstRecht.Konzessionsrecht',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'SelbstRecht.weitere',4,'SelbstRecht.weitere',FALSE,NULL);
+INSERT INTO arp_npl_oereb.grundstueckart (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Bergwerk',5,'Bergwerk',FALSE,NULL);
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localiseduri',NULL,'multilingualuri_localisedtext','ch.ehi.ili2db.foreignKey','multilingualuri');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'legende','ch.ehi.ili2db.foreignKey','transferstruktur_legendeeintrag');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'atext','ch.ehi.ili2db.textKind','MTEXT');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -848,6 +1272,7 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.srid','2056');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'amt_amt_amtimweb','ch.ehi.ili2db.foreignKey','amt_amt');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'eigentumsbeschraenkung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_localisedmtext","localisedmtext"]');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -855,9 +1280,14 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c1Min','2460000.000');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c2Min','1045000.000');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.srid','2056');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('themaref',NULL,'konfiguratn_gmndmtrebk_themen','ch.ehi.ili2db.foreignKey','konfiguration_gemeindemitoerebk');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedtext',NULL,'multilingualtext_localisedtext','ch.ehi.ili2db.foreignKey','multilingualtext');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument',NULL,'hinweisdefinition','ch.ehi.ili2db.foreignKey','transferstruktur_hinweisdefinition');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('thema_themagesetz',NULL,'gesetz','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('thema_themagesetz',NULL,'thema','ch.ehi.ili2db.foreignKey','thema_thema');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualblob',NULL,'konfiguration_logo_bild','ch.ehi.ili2db.foreignKey','konfiguration_logo');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'darstellungsdienst','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('artikelnummer_',NULL,'thema_themagesetz_artikelnr','ch.ehi.ili2db.foreignKey','thema_themagesetz');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'eigentumsbeschraenkung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'transfrstrkstllngsdnst_verweiswms','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinition',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
@@ -869,9 +1299,12 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('themaref',NULL,'transfrstrkhnwsdfntion_thema','ch.ehi.ili2db.foreignKey','transferstruktur_hinweisdefinition');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedblob',NULL,'multilingualblob_localisedblob','ch.ehi.ili2db.foreignKey','multilingualblob');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_localisedtext","localisedtext"]');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'multilingualmtext_localisedtext','ch.ehi.ili2db.foreignKey','multilingualmtext');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_multilingualtext","multilingualtext"]');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung',NULL,'verfeinerung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('metadatenkvs_datenaufnahme',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'vorschriften_dokument_textimweb','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
+INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualmtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_multilingualmtext","multilingualmtext"]');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -882,26 +1315,43 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualblob',NULL,'vorschriften_dokument_dokument','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_dokument',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
 INSERT INTO arp_npl_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'vorschrift','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localiseduri','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualblob','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('rechtsstatus','ch.ehi.ili2db.tableKind','ENUM');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedmtext','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualuri','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_darstellungsdienst','ch.ehi.ili2db.tableKind','CLASS');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung','ch.ehi.ili2db.tableKind','CLASS');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument','ch.ehi.ili2db.tableKind','ASSOCIATION');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedtext','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_geometrie','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('thema_thema','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualtext','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung','ch.ehi.ili2db.tableKind','ASSOCIATION');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_dokumenttyptxt','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('dokumenttyp','ch.ehi.ili2db.tableKind','ENUM');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedblob','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('languagecode_iso639_1','ch.ehi.ili2db.tableKind','ENUM');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('themaref','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinition','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_logo','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_maplayering','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_grundbuchkreis','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_gemeindemitoerebk','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('amt_amt','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('metadatenkvs_datenaufnahme','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisvorschrift','ch.ehi.ili2db.tableKind','ASSOCIATION');
-INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('chcantoncode','ch.ehi.ili2db.tableKind','ENUM');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_haftungsausschuss','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('vorschriften_dokument','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualmtext','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localiseduri','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_glossar','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('thema_themagesetz','ch.ehi.ili2db.tableKind','ASSOCIATION');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_darstellungsdienst','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_grundstueckarttxt','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_rechtsstatustxt','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument','ch.ehi.ili2db.tableKind','ASSOCIATION');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_geometrie','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedtext','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung','ch.ehi.ili2db.tableKind','ASSOCIATION');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('grundstueckart','ch.ehi.ili2db.tableKind','ENUM');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('languagecode_iso639_1','ch.ehi.ili2db.tableKind','ENUM');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('artikelnummer_','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('themaref','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('konfiguration_information','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinition','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('chcantoncode','ch.ehi.ili2db.tableKind','ENUM');
 INSERT INTO arp_npl_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_legendeeintrag','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part4_ADMINISTRATIVEUNITS_20110830.ili','2.3','CHAdminCodes_V1 AdministrativeUnits_V1{ CHAdminCodes_V1 InternationalCodes_V1 Dictionaries_V1 Localisation_V1 INTERLIS} AdministrativeUnitsCH_V1{ CHAdminCodes_V1 InternationalCodes_V1 LocalisationCH_V1 AdministrativeUnits_V1 INTERLIS}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
@@ -1123,7 +1573,7 @@ MODEL AdministrativeUnitsCH_V1 (en)
 END AdministrativeUnitsCH_V1.
 
 !! ########################################################################
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('Units-20120220.ili','2.3','Units','!! File Units.ili Release 2012-02-20
 
 INTERLIS 2.3;
@@ -1221,7 +1671,7 @@ CONTRACTED TYPE MODEL Units (en) AT "http://www.interlis.ch/models"
 
 END Units.
 
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRM_V2_0.ili','2.3','OeREBKRM_V2_0{ InternationalCodes_V1 LocalisationCH_V1}','INTERLIS 2.3;
 
 /** Basisdefinitionen für das OEREB-Katasterrahmenmodell
@@ -1354,7 +1804,7 @@ VERSION "2020-07-02"  =
   END Amt;
 
 END OeREBKRM_V2_0.
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part2_LOCALISATION_20110830.ili','2.3','InternationalCodes_V1 Localisation_V1{ InternationalCodes_V1} LocalisationCH_V1{ InternationalCodes_V1 Localisation_V1} Dictionaries_V1{ InternationalCodes_V1} DictionariesCH_V1{ InternationalCodes_V1 Dictionaries_V1}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
    ======
@@ -1526,7 +1976,7 @@ MODEL DictionariesCH_V1 (en)
 END DictionariesCH_V1.
 
 !! ########################################################################
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CoordSys-20151124.ili','2.3','CoordSys','!! File CoordSys.ili Release 2015-11-24
 
 INTERLIS 2.3;
@@ -1741,7 +2191,7 @@ REFSYSTEM MODEL CoordSys (en) AT "http://www.interlis.ch/models"
 
 END CoordSys.
 
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMvs_V2_0.ili','2.3','OeREBKRMvs_V2_0{ CHAdminCodes_V1 LocalisationCH_V1 OeREBKRM_V2_0}','INTERLIS 2.3;
 
 /** Basisdefinition für Erlasse (Rechtsvorschriften, Hinweise auf Gesetzliche Grundlagen)
@@ -1807,7 +2257,169 @@ VERSION "2020-07-02"  =
   END Vorschriften;
 
 END OeREBKRMvs_V2_0.
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
+INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMkvs_V2_0.ili','2.3','OeREBKRMkvs_V2_0{ CHAdminCodes_V1 LocalisationCH_V1 OeREBKRM_V2_0 OeREBKRMvs_V2_0}','INTERLIS 2.3;
+
+/** Zusatzstrukturen zur Verwendung innerhalb der Katasterorganisation des Kantons
+ */
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRMkvs_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS OeREBKRM_V2_0,LocalisationCH_V1,CHAdminCodes_V1,OeREBKRMvs_V2_0;
+
+  TOPIC Konfiguration =
+
+    /** Anzeigetexte für die Aufzählung DokumentTyp
+     */
+    CLASS DokumentTypTxt =
+      Code : MANDATORY OeREBKRM_V2_0.DokumentTyp;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+    END DokumentTypTxt;
+
+    CLASS GemeindeMitOeREBK =
+      /** BFS-Nr. der Gemeinde
+       */
+      Gemeinde : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** In der Gemeinde freigeschaltete OeREB-Themen
+       */
+      Themen : BAG {0..*} OF OeREBKRM_V2_0.ThemaRef;
+      /** Stand der Grundlagedaten (AV)
+       */
+      GrundlagedatenStand : INTERLIS.XMLDateTime;
+      GrundlagedatenMetadaten : URI;
+      /** z.B. "Untereinheit" oder "GB-Kreis"
+       */
+      BezeichnungUntereinheitGrundbuch : TEXT*80;
+      UNIQUE Gemeinde;
+    END GemeindeMitOeREBK;
+
+    CLASS Glossar =
+      /** Abkürzung
+       */
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Beschreibung der Abkürzung
+       */
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+    END Glossar;
+
+    CLASS GrundbuchKreis =
+      Kanton : MANDATORY CHAdminCodes_V1.CHCantonCode;
+      Gemeinde : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** NBIdent gem. AV-Daten
+       */
+      NBIdent : MANDATORY TEXT*12;
+      /** Name des GB-Kreises
+       */
+      Name : MANDATORY TEXT*60;
+      /** SubKreis gem. GB-Daten (eGRISDM/GBDBS)
+       */
+      SubKreis : TEXT*15;
+      /** Los gem. GB-Daten (eGRISDM/GBDBS)
+       */
+      Los : TEXT*15;
+    END GrundbuchKreis;
+
+    /** Anzeigetexte für die Aufzählung GrundstueckArt
+     */
+    CLASS GrundstueckArtTxt =
+      Code : MANDATORY OeREBKRM_V2_0.GrundstueckArt;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+    END GrundstueckArtTxt;
+
+    CLASS Haftungsausschuss =
+      /** Haftungsausschuss
+       */
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+    END Haftungsausschuss;
+
+    CLASS Information =
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Allgemeine Informationen, Eigentumsbeschränkungen im Grundbuch
+       */
+      Inhalt : MANDATORY LocalisationCH_V1.MultilingualMText;
+      /** Ordnungszahl für die Sortierung im Auszug.
+       */
+      AuszugIndex : MANDATORY -1000 .. 1000;
+    END Information;
+
+    CLASS Logo =
+      /** ch.plr, ch, ch.{kanton} oder ch.{bfsnr}
+       */
+      Code : MANDATORY TEXT*60;
+      Bild : MANDATORY OeREBKRM_V2_0.MultilingualBlob;
+      UNIQUE Code;
+    END Logo;
+
+    CLASS MapLayering =
+      VerweisWMS : MANDATORY URI;
+      LayerIndex : MANDATORY -1000 .. 1000;
+      LayerDeckkraft : MANDATORY 0.000 .. 1.000;
+    END MapLayering;
+
+    /** Anzeigetexte für die Aufzählung RechtsStatus
+     */
+    CLASS RechtsStatusTxt =
+      Code : MANDATORY OeREBKRM_V2_0.RechtsStatus;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      UNIQUE Code;
+    END RechtsStatusTxt;
+
+  END Konfiguration;
+
+  /** Zum Zweck der Nachvollziehbarkeit müssen innerhalb der ÖREB-Katasterorganisation des Kantons Metadaten gem. diesem Teilmodell geführt werden.
+   */
+  TOPIC MetadatenKVS
+  EXTENDS OeREBKRM_V2_0.Amt =
+
+    /** Angaben zur Datenlieferung an die Katasterorganisation des Kantons.
+     */
+    CLASS DatenAufnahme =
+      /** Zeitpunkt der Aufnahme oder der letzten Änderung der Daten
+       */
+      Datum : MANDATORY FORMAT INTERLIS.XMLDate "2010-1-1" .. "2050-12-31";
+      /** BasketId oder Dateiname oder vollständiger WFS-Request.
+       */
+      DatensatzIdentifikation : MANDATORY TEXT;
+    END DatenAufnahme;
+
+    ASSOCIATION ZustaendigeStelleDatenAufnahme =
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
+      DatenAufnahme -<> {0..*} DatenAufnahme;
+    END ZustaendigeStelleDatenAufnahme;
+
+  END MetadatenKVS;
+
+  TOPIC Thema =
+    DEPENDS ON OeREBKRMvs_V2_0.Vorschriften;
+
+    /** Anzeigetexte für die Aufzählung Thema
+     */
+    CLASS Thema =
+      Code : MANDATORY OeREBKRM_V2_0.Thema;
+      SubCode : OeREBKRM_V2_0.Thema;
+      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Ordnungszahl für die Sortierung im Auszug. Bei Subthemen definiert die Ordnungszahl die Reihenfolge innerhalb des Themas.
+       */
+      AuszugIndex : MANDATORY -1000 .. 1000;
+      UNIQUE WHERE NOT(DEFINED(SubCode)): Code;
+      UNIQUE WHERE DEFINED(SubCode): Code,SubCode;
+    END Thema;
+
+    ASSOCIATION ThemaGesetz =
+      Thema -- {0..*} Thema;
+      Gesetz (EXTERNAL) -- {0..*} OeREBKRMvs_V2_0.Vorschriften.Dokument;
+      /** Hinweis auf spezifische Artikel.
+       */
+      ArtikelNr : BAG {0..*} OF OeREBKRM_V2_0.ArtikelNummer_;
+    END ThemaGesetz;
+
+  END Thema;
+
+END OeREBKRMkvs_V2_0.
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part1_GEOMETRY_20110830.ili','2.3','GeometryCHLV03_V1{ CoordSys Units INTERLIS} GeometryCHLV95_V1{ CoordSys Units INTERLIS}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
    ======
@@ -1985,7 +2597,7 @@ TYPE MODEL GeometryCHLV95_V1 (en)
 END GeometryCHLV95_V1.
 
 !! ########################################################################
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMtrsfr_V2_0.ili','2.3','OeREBKRMtrsfr_V2_0{ GeometryCHLV95_V1 CHAdminCodes_V1 LocalisationCH_V1 GeometryCHLV03_V1 OeREBKRM_V2_0 OeREBKRMvs_V2_0}','INTERLIS 2.3;
 
 /** Schnittstelle zwischen zuständiger Stelle für die Geobasisdaten und Katasterorganisation des Kantons.
@@ -2158,7 +2770,7 @@ VERSION "2020-07-02"  =
   END Transferstruktur;
 
 END OeREBKRMtrsfr_V2_0.
-','2020-07-09 17:19:06.826');
+','2020-07-09 18:02:45.694');
 INSERT INTO arp_npl_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createMetaInfo','True');
 INSERT INTO arp_npl_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.beautifyEnumDispName','underscore');
 INSERT INTO arp_npl_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.arrayTrafo','coalesce');
@@ -2189,6 +2801,8 @@ INSERT INTO arp_npl_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db
 INSERT INTO arp_npl_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.multilingualTrafo','expand');
 INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('DictionariesCH_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
 INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('DictionariesCH_V1','technicalContact','models@geo.admin.ch');
+INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMkvs_V2_0','furtherInformation','https://www.cadastre.ch/oereb-public');
+INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMkvs_V2_0','technicalContact','mailto:vermessung@swisstopo.ch');
 INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('Dictionaries_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
 INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('Dictionaries_V1','technicalContact','models@geo.admin.ch');
 INSERT INTO arp_npl_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRM_V2_0','furtherInformation','https://www.cadastre.ch/oereb-public');
