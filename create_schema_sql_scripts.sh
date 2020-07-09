@@ -62,9 +62,9 @@ sql/*_ili1.sql sql/*_ili2.sql \
 sql/commit_transaction.sql \
 | sed -e 's/PG_USER/:PG_USER/g' > sql/setup_gdi.sql
 
-# Create SQL scripts that create DB schemas used for transforming data into the OeREBKRMtrsfr_V1_1 model (so called "transfer schemas")
+# Create SQL scripts that create DB schemas used for transforming data into the OeREBKRMtrsfr_V2_0 model (so called "transfer schemas")
 # The java command here is the same as the second one above; please keep them in sync
-models=OeREBKRMtrsfr_V1_1
+models=OeREBKRMtrsfr_V2_0
 for schemaname in "arp_npl_oereb" "afu_grundwasserschutz_oereb" "awjf_statische_waldgrenzen_oereb" "ada_denkmalschutz_oereb" "afu_geotope_oereb"; do
   java -jar ${ILI2PG_PATH} \
   --idSeqMin 1000000000000 \

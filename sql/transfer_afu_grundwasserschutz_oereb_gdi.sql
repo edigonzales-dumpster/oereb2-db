@@ -15,21 +15,6 @@ CREATE TABLE afu_grundwasserschutz_oereb.localisedtext (
 CREATE INDEX localisedtext_t_basket_idx ON afu_grundwasserschutz_oereb.localisedtext ( t_basket );
 CREATE INDEX localisedtext_t_datasetname_idx ON afu_grundwasserschutz_oereb.localisedtext ( t_datasetname );
 CREATE INDEX localisedtext_multilingualtext_lclsdtext_idx ON afu_grundwasserschutz_oereb.localisedtext ( multilingualtext_localisedtext );
--- Localisation_V1.LocalisedMText
-CREATE TABLE afu_grundwasserschutz_oereb.localisedmtext (
-  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
-  ,T_basket bigint NOT NULL
-  ,T_datasetname varchar(200) NOT NULL
-  ,T_Type varchar(60) NOT NULL
-  ,T_Seq bigint NULL
-  ,alanguage varchar(255) NULL
-  ,atext text NOT NULL
-  ,multilingualmtext_localisedtext bigint NULL
-)
-;
-CREATE INDEX localisedmtext_t_basket_idx ON afu_grundwasserschutz_oereb.localisedmtext ( t_basket );
-CREATE INDEX localisedmtext_t_datasetname_idx ON afu_grundwasserschutz_oereb.localisedmtext ( t_datasetname );
-CREATE INDEX localisedmtext_multilingualmtxt_lclsdtext_idx ON afu_grundwasserschutz_oereb.localisedmtext ( multilingualmtext_localisedtext );
 -- Localisation_V1.MultilingualText
 CREATE TABLE afu_grundwasserschutz_oereb.multilingualtext (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
@@ -41,35 +26,21 @@ CREATE TABLE afu_grundwasserschutz_oereb.multilingualtext (
 ;
 CREATE INDEX multilingualtext_t_basket_idx ON afu_grundwasserschutz_oereb.multilingualtext ( t_basket );
 CREATE INDEX multilingualtext_t_datasetname_idx ON afu_grundwasserschutz_oereb.multilingualtext ( t_datasetname );
--- Localisation_V1.MultilingualMText
-CREATE TABLE afu_grundwasserschutz_oereb.multilingualmtext (
-  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
-  ,T_basket bigint NOT NULL
-  ,T_datasetname varchar(200) NOT NULL
-  ,T_Type varchar(60) NOT NULL
-  ,T_Seq bigint NULL
-)
-;
-CREATE INDEX multilingualmtext_t_basket_idx ON afu_grundwasserschutz_oereb.multilingualmtext ( t_basket );
-CREATE INDEX multilingualmtext_t_datasetname_idx ON afu_grundwasserschutz_oereb.multilingualmtext ( t_datasetname );
--- OeREBKRM_V1_1.ArtikelNummer_
-CREATE TABLE afu_grundwasserschutz_oereb.artikelnummer_ (
+-- OeREBKRM_V2_0.LocalisedBlob
+CREATE TABLE afu_grundwasserschutz_oereb.localisedblob (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
   ,T_Seq bigint NULL
-  ,avalue varchar(20) NOT NULL
-  ,vorschrftn_wswtrdkmnte_artikelnr bigint NULL
-  ,transfrstrkwsvrschrift_artikelnr bigint NULL
+  ,alanguage varchar(255) NULL
+  ,ablob bytea NOT NULL
+  ,multilingualblob_localisedblob bigint NULL
 )
 ;
-CREATE INDEX artikelnummer__t_basket_idx ON afu_grundwasserschutz_oereb.artikelnummer_ ( t_basket );
-CREATE INDEX artikelnummer__t_datasetname_idx ON afu_grundwasserschutz_oereb.artikelnummer_ ( t_datasetname );
-CREATE INDEX artikelnummer__vorschrftn_wsrdkmnt_rtklnr_idx ON afu_grundwasserschutz_oereb.artikelnummer_ ( vorschrftn_wswtrdkmnte_artikelnr );
-CREATE INDEX artikelnummer__transfrstrkwsschrft_rtklnr_idx ON afu_grundwasserschutz_oereb.artikelnummer_ ( transfrstrkwsvrschrift_artikelnr );
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.artikelnummer_.vorschrftn_wswtrdkmnte_artikelnr IS 'Hinweis auf spezifische Artikel.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.artikelnummer_.transfrstrkwsvrschrift_artikelnr IS 'Hinweis auf spezifische Artikel.';
--- OeREBKRM_V1_1.LocalisedUri
+CREATE INDEX localisedblob_t_basket_idx ON afu_grundwasserschutz_oereb.localisedblob ( t_basket );
+CREATE INDEX localisedblob_t_datasetname_idx ON afu_grundwasserschutz_oereb.localisedblob ( t_datasetname );
+CREATE INDEX localisedblob_multilingualblob_lclsdblob_idx ON afu_grundwasserschutz_oereb.localisedblob ( multilingualblob_localisedblob );
+-- OeREBKRM_V2_0.LocalisedUri
 CREATE TABLE afu_grundwasserschutz_oereb.localiseduri (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
@@ -83,24 +54,56 @@ CREATE TABLE afu_grundwasserschutz_oereb.localiseduri (
 CREATE INDEX localiseduri_t_basket_idx ON afu_grundwasserschutz_oereb.localiseduri ( t_basket );
 CREATE INDEX localiseduri_t_datasetname_idx ON afu_grundwasserschutz_oereb.localiseduri ( t_datasetname );
 CREATE INDEX localiseduri_multilingualuri_loclsdtext_idx ON afu_grundwasserschutz_oereb.localiseduri ( multilingualuri_localisedtext );
--- OeREBKRM_V1_1.MultilingualUri
+-- OeREBKRM_V2_0.MultilingualBlob
+CREATE TABLE afu_grundwasserschutz_oereb.multilingualblob (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,T_Seq bigint NULL
+  ,vorschriften_dokument_dokument bigint NULL
+)
+;
+CREATE INDEX multilingualblob_t_basket_idx ON afu_grundwasserschutz_oereb.multilingualblob ( t_basket );
+CREATE INDEX multilingualblob_t_datasetname_idx ON afu_grundwasserschutz_oereb.multilingualblob ( t_datasetname );
+CREATE INDEX multilingualblob_vorschriften_dokmnt_dkment_idx ON afu_grundwasserschutz_oereb.multilingualblob ( vorschriften_dokument_dokument );
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.multilingualblob.vorschriften_dokument_dokument IS 'Das Dokument als PDF-Datei';
+-- OeREBKRM_V2_0.MultilingualUri
 CREATE TABLE afu_grundwasserschutz_oereb.multilingualuri (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
   ,T_Seq bigint NULL
-  ,vorschriften_artikel_textimweb bigint NULL
+  ,amt_amt_amtimweb bigint NULL
   ,vorschriften_dokument_textimweb bigint NULL
+  ,transfrstrkstllngsdnst_verweiswms bigint NULL
 )
 ;
 CREATE INDEX multilingualuri_t_basket_idx ON afu_grundwasserschutz_oereb.multilingualuri ( t_basket );
 CREATE INDEX multilingualuri_t_datasetname_idx ON afu_grundwasserschutz_oereb.multilingualuri ( t_datasetname );
-CREATE INDEX multilingualuri_vorschriften_artkl_txtmweb_idx ON afu_grundwasserschutz_oereb.multilingualuri ( vorschriften_artikel_textimweb );
+CREATE INDEX multilingualuri_amt_amt_amtimweb_idx ON afu_grundwasserschutz_oereb.multilingualuri ( amt_amt_amtimweb );
 CREATE INDEX multilingualuri_vorschriften_dkmnt_txtmweb_idx ON afu_grundwasserschutz_oereb.multilingualuri ( vorschriften_dokument_textimweb );
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.multilingualuri.vorschriften_artikel_textimweb IS 'Verweis auf das Element im Web; z.B. "http://www.admin.ch/ch/d/sr/700/a18.html"';
+CREATE INDEX multilingualuri_transfrstrkstsdnst_vrwswms_idx ON afu_grundwasserschutz_oereb.multilingualuri ( transfrstrkstllngsdnst_verweiswms );
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.multilingualuri.amt_amt_amtimweb IS 'Verweis auf die Website des Amtes z.B. "http://www.jgk.be.ch/jgk/de/index/direktion/organisation/agr.html".';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.multilingualuri.vorschriften_dokument_textimweb IS 'Verweis auf das Element im Web; z.B. "http://www.admin.ch/ch/d/sr/700/a18.html"';
--- OeREBKRMvs_V1_1.Vorschriften.Amt
-CREATE TABLE afu_grundwasserschutz_oereb.vorschriften_amt (
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.multilingualuri.transfrstrkstllngsdnst_verweiswms IS 'WMS GetMap-Request (für Maschine-Maschine-Kommunikation) inkl. alle benötigten Parameter, z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&STYLES=default&SRS=EPSG:21781&BBOX=475000,60000,845000,310000&WIDTH=740&HEIGHT=500&FORMAT=image/png&LAYERS=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"';
+-- OeREBKRM_V2_0.ThemaRef
+CREATE TABLE afu_grundwasserschutz_oereb.themaref (
+  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
+  ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
+  ,T_Seq bigint NULL
+  ,thema varchar(120) NOT NULL
+  ,subthema varchar(120) NULL
+  ,transfrstrkhnwsdfntion_thema bigint NULL
+)
+;
+CREATE INDEX themaref_t_basket_idx ON afu_grundwasserschutz_oereb.themaref ( t_basket );
+CREATE INDEX themaref_t_datasetname_idx ON afu_grundwasserschutz_oereb.themaref ( t_datasetname );
+CREATE INDEX themaref_transfrstrkhnwsdfntn_thema_idx ON afu_grundwasserschutz_oereb.themaref ( transfrstrkhnwsdfntion_thema );
+COMMENT ON TABLE afu_grundwasserschutz_oereb.themaref IS 'Qualifzierter Verweis auf ein Thema oder Subthema.';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.themaref.transfrstrkhnwsdfntion_thema IS 'Thema falls der Hinweis für ein bestimmtes ÖREB-Thema gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle ÖREB-Themen gilt.';
+-- OeREBKRM_V2_0.Amt.Amt
+CREATE TABLE afu_grundwasserschutz_oereb.amt_amt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
@@ -111,144 +114,112 @@ CREATE TABLE afu_grundwasserschutz_oereb.vorschriften_amt (
   ,aname_rm text NULL
   ,aname_it text NULL
   ,aname_en text NULL
-  ,amtimweb varchar(1023) NULL
   ,auid varchar(12) NULL
+  ,zeile1 varchar(80) NULL
+  ,zeile2 varchar(80) NULL
+  ,strasse varchar(100) NULL
+  ,hausnr varchar(7) NULL
+  ,plz varchar(4) NULL
+  ,ort varchar(60) NULL
 )
 ;
-CREATE INDEX vorschriften_amt_t_basket_idx ON afu_grundwasserschutz_oereb.vorschriften_amt ( t_basket );
-CREATE INDEX vorschriften_amt_t_datasetname_idx ON afu_grundwasserschutz_oereb.vorschriften_amt ( t_datasetname );
-COMMENT ON TABLE afu_grundwasserschutz_oereb.vorschriften_amt IS 'Eine organisatorische Einheit innerhalb der öffentlichen Verwaltung, z.B. eine für Geobasisdaten zuständige Stelle.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_amt.amtimweb IS 'Verweis auf die Website des Amtes z.B. "http://www.jgk.be.ch/jgk/de/index/direktion/organisation/agr.html".';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_amt.auid IS 'UID der organisatorischen Einheit';
--- OeREBKRMvs_V1_1.Vorschriften.Artikel
-CREATE TABLE afu_grundwasserschutz_oereb.vorschriften_artikel (
-  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
-  ,T_basket bigint NOT NULL
-  ,T_datasetname varchar(200) NOT NULL
-  ,T_Ili_Tid varchar(200) NULL
-  ,nr varchar(20) NOT NULL
-  ,atext text NULL
-  ,atext_de text NULL
-  ,atext_fr text NULL
-  ,atext_rm text NULL
-  ,atext_it text NULL
-  ,atext_en text NULL
-  ,dokument bigint NOT NULL
-  ,rechtsstatus varchar(255) NOT NULL
-  ,publiziertab date NOT NULL
-)
-;
-CREATE INDEX vorschriften_artikel_t_basket_idx ON afu_grundwasserschutz_oereb.vorschriften_artikel ( t_basket );
-CREATE INDEX vorschriften_artikel_t_datasetname_idx ON afu_grundwasserschutz_oereb.vorschriften_artikel ( t_datasetname );
-CREATE INDEX vorschriften_artikel_dokument_idx ON afu_grundwasserschutz_oereb.vorschriften_artikel ( dokument );
-COMMENT ON TABLE afu_grundwasserschutz_oereb.vorschriften_artikel IS 'Einzelner Artikel einer Rechtsvorschrift oder einer gesetzlichen Grundlage.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_artikel.nr IS 'Nummer des Artikels innerhalb der gesetzlichen Grundlage oder der Rechtsvorschrift. z.B. "23"';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_artikel.rechtsstatus IS 'Status, ob dieses Element in Kraft ist';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_artikel.publiziertab IS 'Datum, ab dem dieses Element in Auszügen erscheint';
--- OeREBKRMvs_V1_1.Vorschriften.Dokument
+CREATE INDEX amt_amt_t_basket_idx ON afu_grundwasserschutz_oereb.amt_amt ( t_basket );
+CREATE INDEX amt_amt_t_datasetname_idx ON afu_grundwasserschutz_oereb.amt_amt ( t_datasetname );
+COMMENT ON TABLE afu_grundwasserschutz_oereb.amt_amt IS 'Eine organisatorische Einheit innerhalb der öffentlichen Verwaltung, z.B. eine für Geobasisdaten zuständige Stelle.';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.amt_amt.auid IS 'UID der organisatorischen Einheit';
+-- OeREBKRMvs_V2_0.Vorschriften.Dokument
 CREATE TABLE afu_grundwasserschutz_oereb.vorschriften_dokument (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,T_Type varchar(60) NOT NULL
   ,T_Ili_Tid varchar(200) NULL
+  ,typ varchar(255) NOT NULL
   ,titel text NULL
   ,titel_de text NULL
   ,titel_fr text NULL
   ,titel_rm text NULL
   ,titel_it text NULL
   ,titel_en text NULL
-  ,offiziellertitel text NULL
-  ,offiziellertitel_de text NULL
-  ,offiziellertitel_fr text NULL
-  ,offiziellertitel_rm text NULL
-  ,offiziellertitel_it text NULL
-  ,offiziellertitel_en text NULL
   ,abkuerzung text NULL
   ,abkuerzung_de text NULL
   ,abkuerzung_fr text NULL
   ,abkuerzung_rm text NULL
   ,abkuerzung_it text NULL
   ,abkuerzung_en text NULL
-  ,offiziellenr varchar(20) NULL
+  ,offiziellenr text NULL
+  ,offiziellenr_de text NULL
+  ,offiziellenr_fr text NULL
+  ,offiziellenr_rm text NULL
+  ,offiziellenr_it text NULL
+  ,offiziellenr_en text NULL
   ,kanton varchar(255) NULL
   ,gemeinde integer NULL
-  ,dokument bytea NULL
-  ,zustaendigestelle bigint NOT NULL
+  ,nuringemeinde integer NULL
   ,rechtsstatus varchar(255) NOT NULL
   ,publiziertab date NOT NULL
+  ,publiziertbis date NULL
+  ,zustaendigestelle bigint NOT NULL
 )
 ;
 CREATE INDEX vorschriften_dokument_t_basket_idx ON afu_grundwasserschutz_oereb.vorschriften_dokument ( t_basket );
 CREATE INDEX vorschriften_dokument_t_datasetname_idx ON afu_grundwasserschutz_oereb.vorschriften_dokument ( t_datasetname );
 CREATE INDEX vorschriften_dokument_zustaendigestelle_idx ON afu_grundwasserschutz_oereb.vorschriften_dokument ( zustaendigestelle );
 COMMENT ON TABLE afu_grundwasserschutz_oereb.vorschriften_dokument IS 'Dokumente im allgemeinen (Gesetze, Verordnungen, Rechtsvorschriften)';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.offiziellenr IS 'Offizielle Nummer des Gesetzes; z.B. "SR 700"';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.kanton IS 'Kantonskürzel falls Vorschrift des Kantons oder der Gemeinde. Falls die Angabe fehlt, ist es eine Vorschrift des Bundes. z.B. "BE"';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.gemeinde IS 'Falls die Angabe fehlt, ist es ein Erlass des Kantons oder des Bundes. z.B. "942"';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.dokument IS 'Das Dokument als PDF-Datei';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.nuringemeinde IS 'Falls das Dokument nur eine bestimmte Gemeinde betrifft (z.B. Sicherheitszonenplan)';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.rechtsstatus IS 'Status, ob dieses Element in Kraft ist';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.publiziertab IS 'Datum, ab dem dieses Element in Auszügen erscheint';
--- OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente
-CREATE TABLE afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente (
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.publiziertab IS 'Datum, ab dem dieses Dokument in Auszügen erscheint';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.vorschriften_dokument.publiziertbis IS 'Datum, an/ab dem dieses Dokument nicht mehr in Auszügen erscheint';
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst
+CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,ursprung bigint NOT NULL
-  ,hinweis bigint NOT NULL
 )
 ;
-CREATE INDEX vorschriften_hnwswtrdkmnte_t_basket_idx ON afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ( t_basket );
-CREATE INDEX vorschriften_hnwswtrdkmnte_t_datasetname_idx ON afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ( t_datasetname );
-CREATE INDEX vorschriften_hnwswtrdkmnte_ursprung_idx ON afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ( ursprung );
-CREATE INDEX vorschriften_hnwswtrdkmnte_hinweis_idx ON afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ( hinweis );
--- OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung
+CREATE INDEX transfrstrktrdrstllngsdnst_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ( t_basket );
+CREATE INDEX transfrstrktrdrstllngsdnst_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ( t_datasetname );
+COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst IS 'Angaben zum Darstellungsdienst.';
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,aussage text NULL
-  ,aussage_de text NULL
-  ,aussage_fr text NULL
-  ,aussage_rm text NULL
-  ,aussage_it text NULL
-  ,aussage_en text NULL
   ,thema varchar(120) NOT NULL
   ,subthema varchar(120) NULL
-  ,artcode varchar(40) NULL
-  ,artcodeliste varchar(1023) NULL
   ,rechtsstatus varchar(255) NOT NULL
   ,publiziertab date NOT NULL
+  ,publiziertbis date NULL
   ,darstellungsdienst bigint NULL
+  ,legende bigint NOT NULL
   ,zustaendigestelle bigint NOT NULL
 )
 ;
 CREATE INDEX transfrstrktrtmsbschrnkung_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ( t_basket );
 CREATE INDEX transfrstrktrtmsbschrnkung_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ( t_datasetname );
 CREATE INDEX transfrstrktrtmsbschrnkung_darstellungsdienst_idx ON afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ( darstellungsdienst );
+CREATE INDEX transfrstrktrtmsbschrnkung_legende_idx ON afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ( legende );
 CREATE INDEX transfrstrktrtmsbschrnkung_zustaendigestelle_idx ON afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ( zustaendigestelle );
 COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung IS 'Wurzelelement für Informationen über eine Beschränkung des Grundeigentums, die rechtskräftig, z.B. auf Grund einer Genehmigung oder eines richterlichen Entscheids, zustande gekommen ist.';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.thema IS 'Einordnung der Eigentumsbeschränkung in ein ÖREBK-Thema';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.subthema IS 'z.B. Planungszonen innerhalb Nutzungsplanung';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.artcode IS 'Themenspezifische, maschinen-lesbare Art gem. Originalmodell der Eigentumsbeschränkung';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.artcodeliste IS 'Identifikation der Codeliste bzw. des Wertebereichs für ArtCode';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.rechtsstatus IS 'Status, ob diese Eigentumsbeschränkung in Kraft ist';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.publiziertab IS 'Datum, ab dem diese Eigentumsbeschränkung in Auszügen erscheint';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.publiziertbis IS 'Datum, an/ab dem diese Eigentumsbeschränkung nicht mehr in Auszügen erscheint';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.darstellungsdienst IS 'Darstellungsdienst, auf dem diese Eigentumsbeschränkung sichtbar, aber nicht hervorgehoben, ist.';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung.zustaendigestelle IS 'Zuständige Stelle für die Geobasisdaten (Originaldaten) gem. GeoIG Art. 8 Abs. 1';
--- OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,punkt_lv03 geometry(POINT,21781) NULL
   ,punkt_lv95 geometry(POINT,2056) NULL
-  ,linie_lv03 geometry(LINESTRING,21781) NULL
   ,linie_lv95 geometry(LINESTRING,2056) NULL
-  ,flaeche_lv03 geometry(POLYGON,21781) NULL
   ,flaeche_lv95 geometry(POLYGON,2056) NULL
   ,rechtsstatus varchar(255) NOT NULL
   ,publiziertab date NOT NULL
+  ,publiziertbis date NULL
   ,metadatengeobasisdaten varchar(1023) NULL
   ,eigentumsbeschraenkung bigint NOT NULL
   ,zustaendigestelle bigint NOT NULL
@@ -256,27 +227,24 @@ CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie (
 ;
 CREATE INDEX transferstruktur_geometrie_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie ( t_basket );
 CREATE INDEX transferstruktur_geometrie_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie ( t_datasetname );
-CREATE INDEX transferstruktur_geometrie_punkt_lv03_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( punkt_lv03 );
 CREATE INDEX transferstruktur_geometrie_punkt_lv95_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( punkt_lv95 );
-CREATE INDEX transferstruktur_geometrie_linie_lv03_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( linie_lv03 );
 CREATE INDEX transferstruktur_geometrie_linie_lv95_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( linie_lv95 );
-CREATE INDEX transferstruktur_geometrie_flaeche_lv03_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( flaeche_lv03 );
 CREATE INDEX transferstruktur_geometrie_flaeche_lv95_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie USING GIST ( flaeche_lv95 );
 CREATE INDEX transferstruktur_geometrie_eigentumsbeschraenkung_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie ( eigentumsbeschraenkung );
 CREATE INDEX transferstruktur_geometrie_zustaendigestelle_idx ON afu_grundwasserschutz_oereb.transferstruktur_geometrie ( zustaendigestelle );
 COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie IS 'Punkt-, linien-, oder flächenförmige Geometrie. Neu zu definierende Eigentumsbeschränkungen sollten i.d.R. flächenförmig sein.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.punkt_lv03 IS 'Punktgeometrie';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.linie_lv03 IS 'Linienförmige Geometrie';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.flaeche_lv03 IS 'Flächenförmige Geometrie';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.punkt_lv95 IS 'Punktgeometrie';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.linie_lv95 IS 'Linienförmige Geometrie';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.flaeche_lv95 IS 'Flächenförmige Geometrie';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.rechtsstatus IS 'Status, ob diese Geometrie in Kraft ist';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.publiziertab IS 'Datum, ab dem diese Geometrie in Auszügen erscheint';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.publiziertbis IS 'Datum, an/ab dem diese Geometrie nicht mehr in Auszügen erscheint';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_geometrie.metadatengeobasisdaten IS 'Verweis auf maschinenlesbare Metadaten (XML) der zugrundeliegenden Geobasisdaten. z.B. http://www.geocat.ch/geonetwork/srv/deu/gm03.xml?id=705';
--- OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,thema varchar(120) NULL
   ,kanton varchar(255) NULL
   ,gemeinde integer NULL
   ,zustaendigestelle bigint NOT NULL
@@ -286,16 +254,16 @@ CREATE INDEX transferstrktr_hnwsdfntion_t_basket_idx ON afu_grundwasserschutz_oe
 CREATE INDEX transferstrktr_hnwsdfntion_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ( t_datasetname );
 CREATE INDEX transferstrktr_hnwsdfntion_zustaendigestelle_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ( zustaendigestelle );
 COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition IS 'Definition für Hinweise, die unabhängig von einer konkreten Eigentumsbeschränkung gelten (z.B. der Hinweis auf eine Systematische Rechtssammlung). Der Hinweis kann aber beschränkt werden auf eine bestimmtes ÖREB-Thema und/oder Kanton und/oder Gemeinde.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition.thema IS 'Thema falls der Hinweis für ein bestimmtes ÖREB-Thema gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle ÖREB-Themen gilt.';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition.kanton IS 'Kantonskürzel falls der Hinweis für ein Kantons-oder Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle Kantone gilt. z.B. "BE".';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition.gemeinde IS 'BFSNr falls der Hinweis für ein Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für den Kanton oder die Schweiz gilt. z.B. "942".';
--- OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
-  ,T_Seq bigint NULL
-  ,symbol bytea NOT NULL
+  ,symbolpunkt bytea NULL
+  ,symbollinie bytea NULL
+  ,symbolflaeche bytea NULL
   ,legendetext text NULL
   ,legendetext_de text NULL
   ,legendetext_fr text NULL
@@ -306,33 +274,19 @@ CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag (
   ,artcodeliste varchar(1023) NOT NULL
   ,thema varchar(120) NOT NULL
   ,subthema varchar(120) NULL
-  ,transfrstrkstllngsdnst_legende bigint NULL
+  ,darstellungsdienst bigint NOT NULL
 )
 ;
 CREATE INDEX transferstruktur_lgndntrag_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ( t_basket );
 CREATE INDEX transferstruktur_lgndntrag_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ( t_datasetname );
-CREATE INDEX transferstruktur_lgndntrag_transfrstrkstngsdnst_lgnde_idx ON afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ( transfrstrkstllngsdnst_legende );
+CREATE INDEX transferstruktur_lgndntrag_darstellungsdienst_idx ON afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ( darstellungsdienst );
 COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag IS 'Ein Eintrag in der Planlegende.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.symbol IS 'Grafischer Teil des Legendeneintrages für die Darstellung. Im PNG-Format mit 300dpi oder im SVG-Format';
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.symbolpunkt IS 'Grafischer Teil des Legendeneintrages für die Darstellung. Im PNG-Format mit 300dpi oder im SVG-Format';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.artcode IS 'Art der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.artcodeliste IS 'Codeliste der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.thema IS 'Zu welchem ÖREB-Thema der Legendeneintrag gehört';
 COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag.subthema IS 'z.B. Planungszonen innerhalb Nutzungsplanung';
--- OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst
-CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst (
-  T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
-  ,T_basket bigint NOT NULL
-  ,T_datasetname varchar(200) NOT NULL
-  ,verweiswms varchar(1023) NOT NULL
-  ,legendeimweb varchar(1023) NULL
-)
-;
-CREATE INDEX transfrstrktrdrstllngsdnst_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ( t_basket );
-CREATE INDEX transfrstrktrdrstllngsdnst_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ( t_datasetname );
-COMMENT ON TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst IS 'Angaben zum Darstellungsdienst.';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst.verweiswms IS 'WMS GetMap-Request (für Maschine-Maschine-Kommunikation) inkl. alle benötigten Parameter, z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&STYLES=default&SRS=EPSG:21781&BBOX=475000,60000,845000,310000&WIDTH=740&HEIGHT=500&FORMAT=image/png&LAYERS=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst.legendeimweb IS 'Verweis auf ein Dokument das die Karte beschreibt; z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetLegendGraphic&VERSION=1.1.1&FORMAT=image/png&LAYER=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"';
--- OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
@@ -345,7 +299,7 @@ CREATE INDEX transfrstrktrrndlgvrfnrung_t_basket_idx ON afu_grundwasserschutz_oe
 CREATE INDEX transfrstrktrrndlgvrfnrung_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ( t_datasetname );
 CREATE INDEX transfrstrktrrndlgvrfnrung_grundlage_idx ON afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ( grundlage );
 CREATE INDEX transfrstrktrrndlgvrfnrung_verfeinerung_idx ON afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ( verfeinerung );
--- OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokument (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
@@ -358,23 +312,20 @@ CREATE INDEX transfrstrktrwsdfntndkment_t_basket_idx ON afu_grundwasserschutz_oe
 CREATE INDEX transfrstrktrwsdfntndkment_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokument ( t_datasetname );
 CREATE INDEX transfrstrktrwsdfntndkment_hinweisdefinition_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokument ( hinweisdefinition );
 CREATE INDEX transfrstrktrwsdfntndkment_dokument_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokument ( dokument );
--- OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift
+-- OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift
 CREATE TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift (
   T_Id bigint PRIMARY KEY DEFAULT nextval('afu_grundwasserschutz_oereb.t_ili2db_seq')
   ,T_basket bigint NOT NULL
   ,T_datasetname varchar(200) NOT NULL
   ,eigentumsbeschraenkung bigint NOT NULL
-  ,vorschrift_vorschriften_dokument bigint NULL
-  ,vorschrift_vorschriften_artikel bigint NULL
+  ,vorschrift bigint NOT NULL
 )
 ;
 CREATE INDEX transfrstrktrhnwsvrschrift_t_basket_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( t_basket );
 CREATE INDEX transfrstrktrhnwsvrschrift_t_datasetname_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( t_datasetname );
 CREATE INDEX transfrstrktrhnwsvrschrift_eigentumsbeschraenkung_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( eigentumsbeschraenkung );
-CREATE INDEX transfrstrktrhnwsvrschrift_vorschrft_vrschrftn_dkment_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( vorschrift_vorschriften_dokument );
-CREATE INDEX transfrstrktrhnwsvrschrift_vorschrift_vrschrftn_rtkel_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( vorschrift_vorschriften_artikel );
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift.vorschrift_vorschriften_dokument IS 'Rechtsvorschrift der Eigentumsbeschränkung';
-COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift.vorschrift_vorschriften_artikel IS 'Rechtsvorschrift der Eigentumsbeschränkung';
+CREATE INDEX transfrstrktrhnwsvrschrift_vorschrift_idx ON afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ( vorschrift );
+COMMENT ON COLUMN afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift.vorschrift IS 'Rechtsvorschrift/Hinweis zur Eigentumsbeschränkung';
 CREATE TABLE afu_grundwasserschutz_oereb.T_ILI2DB_BASKET (
   T_Id bigint PRIMARY KEY
   ,dataset bigint NULL
@@ -430,7 +381,16 @@ CREATE TABLE afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (
   ,modelName text NOT NULL
   ,content text NOT NULL
   ,importDate timestamp NOT NULL
-  ,PRIMARY KEY (iliversion,modelName)
+  ,PRIMARY KEY (modelName,iliversion)
+)
+;
+CREATE TABLE afu_grundwasserschutz_oereb.dokumenttyp (
+  itfCode integer PRIMARY KEY
+  ,iliCode varchar(1024) NOT NULL
+  ,seq integer NULL
+  ,inactive boolean NOT NULL
+  ,dispName varchar(250) NOT NULL
+  ,description varchar(1024) NULL
 )
 ;
 CREATE TABLE afu_grundwasserschutz_oereb.languagecode_iso639_1 (
@@ -495,39 +455,37 @@ CREATE TABLE afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (
 ;
 ALTER TABLE afu_grundwasserschutz_oereb.localisedtext ADD CONSTRAINT localisedtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.localisedtext ADD CONSTRAINT localisedtext_multilingualtext_lclsdtext_fkey FOREIGN KEY ( multilingualtext_localisedtext ) REFERENCES afu_grundwasserschutz_oereb.multilingualtext DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.localisedmtext ADD CONSTRAINT localisedmtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.localisedmtext ADD CONSTRAINT localisedmtext_multilingualmtxt_lclsdtext_fkey FOREIGN KEY ( multilingualmtext_localisedtext ) REFERENCES afu_grundwasserschutz_oereb.multilingualmtext DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.multilingualtext ADD CONSTRAINT multilingualtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.multilingualmtext ADD CONSTRAINT multilingualmtext_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.artikelnummer_ ADD CONSTRAINT artikelnummer__T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.artikelnummer_ ADD CONSTRAINT artikelnummer__vorschrftn_wsrdkmnt_rtklnr_fkey FOREIGN KEY ( vorschrftn_wswtrdkmnte_artikelnr ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.artikelnummer_ ADD CONSTRAINT artikelnummer__transfrstrkwsschrft_rtklnr_fkey FOREIGN KEY ( transfrstrkwsvrschrift_artikelnr ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.localisedblob ADD CONSTRAINT localisedblob_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.localisedblob ADD CONSTRAINT localisedblob_multilingualblob_lclsdblob_fkey FOREIGN KEY ( multilingualblob_localisedblob ) REFERENCES afu_grundwasserschutz_oereb.multilingualblob DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.localiseduri ADD CONSTRAINT localiseduri_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.localiseduri ADD CONSTRAINT localiseduri_multilingualuri_loclsdtext_fkey FOREIGN KEY ( multilingualuri_localisedtext ) REFERENCES afu_grundwasserschutz_oereb.multilingualuri DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.multilingualblob ADD CONSTRAINT multilingualblob_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.multilingualblob ADD CONSTRAINT multilingualblob_vorschriften_dokmnt_dkment_fkey FOREIGN KEY ( vorschriften_dokument_dokument ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.multilingualuri ADD CONSTRAINT multilingualuri_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.multilingualuri ADD CONSTRAINT multilingualuri_vorschriften_artkl_txtmweb_fkey FOREIGN KEY ( vorschriften_artikel_textimweb ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_artikel DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.multilingualuri ADD CONSTRAINT multilingualuri_amt_amt_amtimweb_fkey FOREIGN KEY ( amt_amt_amtimweb ) REFERENCES afu_grundwasserschutz_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.multilingualuri ADD CONSTRAINT multilingualuri_vorschriften_dkmnt_txtmweb_fkey FOREIGN KEY ( vorschriften_dokument_textimweb ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_amt ADD CONSTRAINT vorschriften_amt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_artikel ADD CONSTRAINT vorschriften_artikel_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_artikel ADD CONSTRAINT vorschriften_artikel_dokument_fkey FOREIGN KEY ( dokument ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.multilingualuri ADD CONSTRAINT multilingualuri_transfrstrkstsdnst_vrwswms_fkey FOREIGN KEY ( transfrstrkstllngsdnst_verweiswms ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.themaref ADD CONSTRAINT themaref_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.themaref ADD CONSTRAINT themaref_transfrstrkhnwsdfntn_thema_fkey FOREIGN KEY ( transfrstrkhnwsdfntion_thema ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.amt_amt ADD CONSTRAINT amt_amt_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_gemeinde_check CHECK( gemeinde BETWEEN 1 AND 9999);
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_amt DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ADD CONSTRAINT vorschriften_hnwswtrdkmnte_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ADD CONSTRAINT vorschriften_hnwswtrdkmnte_ursprung_fkey FOREIGN KEY ( ursprung ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_hinweisweiteredokumente ADD CONSTRAINT vorschriften_hnwswtrdkmnte_hinweis_fkey FOREIGN KEY ( hinweis ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_nuringemeinde_check CHECK( nuringemeinde BETWEEN 1 AND 9999);
+ALTER TABLE afu_grundwasserschutz_oereb.vorschriften_dokument ADD CONSTRAINT vorschriften_dokument_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ADD CONSTRAINT transfrstrktrdrstllngsdnst_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ADD CONSTRAINT transfrstrktrtmsbschrnkung_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ADD CONSTRAINT transfrstrktrtmsbschrnkung_darstellungsdienst_fkey FOREIGN KEY ( darstellungsdienst ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ADD CONSTRAINT transfrstrktrtmsbschrnkung_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_amt DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ADD CONSTRAINT transfrstrktrtmsbschrnkung_legende_fkey FOREIGN KEY ( legende ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung ADD CONSTRAINT transfrstrktrtmsbschrnkung_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie ADD CONSTRAINT transferstruktur_geometrie_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie ADD CONSTRAINT transferstruktur_geometrie_eigentumsbeschraenkung_fkey FOREIGN KEY ( eigentumsbeschraenkung ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie ADD CONSTRAINT transferstruktur_geometrie_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_amt DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_geometrie ADD CONSTRAINT transferstruktur_geometrie_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ADD CONSTRAINT transferstrktr_hnwsdfntion_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ADD CONSTRAINT transfrstrktr_hnwsdfntion_gemeinde_check CHECK( gemeinde BETWEEN 1 AND 9999);
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ADD CONSTRAINT transferstrktr_hnwsdfntion_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_amt DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinition ADD CONSTRAINT transferstrktr_hnwsdfntion_zustaendigestelle_fkey FOREIGN KEY ( zustaendigestelle ) REFERENCES afu_grundwasserschutz_oereb.amt_amt DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ADD CONSTRAINT transferstruktur_lgndntrag_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ADD CONSTRAINT transferstruktur_lgndntrag_transfrstrkstngsdnst_lgnde_fkey FOREIGN KEY ( transfrstrkstllngsdnst_legende ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst ADD CONSTRAINT transfrstrktrdrstllngsdnst_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_legendeeintrag ADD CONSTRAINT transferstruktur_lgndntrag_darstellungsdienst_fkey FOREIGN KEY ( darstellungsdienst ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_darstellungsdienst DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ADD CONSTRAINT transfrstrktrrndlgvrfnrung_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ADD CONSTRAINT transfrstrktrrndlgvrfnrung_grundlage_fkey FOREIGN KEY ( grundlage ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_grundlageverfeinerung ADD CONSTRAINT transfrstrktrrndlgvrfnrung_verfeinerung_fkey FOREIGN KEY ( verfeinerung ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung DEFERRABLE INITIALLY DEFERRED;
@@ -536,200 +494,179 @@ ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokume
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisdefinitiondokument ADD CONSTRAINT transfrstrktrwsdfntndkment_dokument_fkey FOREIGN KEY ( dokument ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_T_basket_fkey FOREIGN KEY ( T_basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_eigentumsbeschraenkung_fkey FOREIGN KEY ( eigentumsbeschraenkung ) REFERENCES afu_grundwasserschutz_oereb.transferstruktur_eigentumsbeschraenkung DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_vorschrft_vrschrftn_dkment_fkey FOREIGN KEY ( vorschrift_vorschriften_dokument ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_vorschrift_vrschrftn_rtkel_fkey FOREIGN KEY ( vorschrift_vorschriften_artikel ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_artikel DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE afu_grundwasserschutz_oereb.transferstruktur_hinweisvorschrift ADD CONSTRAINT transfrstrktrhnwsvrschrift_vorschrift_fkey FOREIGN KEY ( vorschrift ) REFERENCES afu_grundwasserschutz_oereb.vorschriften_dokument DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.T_ILI2DB_BASKET ADD CONSTRAINT T_ILI2DB_BASKET_dataset_fkey FOREIGN KEY ( dataset ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_DATASET DEFERRABLE INITIALLY DEFERRED;
 CREATE UNIQUE INDEX T_ILI2DB_DATASET_datasetName_key ON afu_grundwasserschutz_oereb.T_ILI2DB_DATASET (datasetName)
 ;
 ALTER TABLE afu_grundwasserschutz_oereb.T_ILI2DB_IMPORT_BASKET ADD CONSTRAINT T_ILI2DB_IMPORT_BASKET_importrun_fkey FOREIGN KEY ( importrun ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_IMPORT DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE afu_grundwasserschutz_oereb.T_ILI2DB_IMPORT_BASKET ADD CONSTRAINT T_ILI2DB_IMPORT_BASKET_basket_fkey FOREIGN KEY ( basket ) REFERENCES afu_grundwasserschutz_oereb.T_ILI2DB_BASKET DEFERRABLE INITIALLY DEFERRED;
-CREATE UNIQUE INDEX T_ILI2DB_MODEL_iliversion_modelName_key ON afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (iliversion,modelName)
+CREATE UNIQUE INDEX T_ILI2DB_MODEL_modelName_iliversion_key ON afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (modelName,iliversion)
 ;
 CREATE UNIQUE INDEX T_ILI2DB_ATTRNAME_SqlName_ColOwner_key ON afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (SqlName,ColOwner)
 ;
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.MultilingualText','multilingualtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V1_1.ArtikelInhaltMehrsprachig','artikelinhaltmehrsprachig');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.ZustaendigeStelleDokument','vorschriften_zustaendigestelledokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleGeometrie','transferstruktur_zustaendigestellegeometrie');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.ThemaRef','themaref');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','transferstruktur_eigentumsbeschraenkunglegende');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('InternationalCodes_V1.LanguageCode_ISO639_1','languagecode_iso639_1');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst','transferstruktur_darstellungsdienst');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.MultilingualMText','localisationch_v1_multilingualmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentArtikel','vorschriften_dokumentartikel');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','transferstruktur_zustaendigestelleeigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument','vorschriften_zustaendigestelledokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift','transferstruktur_hinweisvorschrift');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition','transferstruktur_hinweisdefinition');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.LocalisedText','localisedtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie','transferstruktur_geometrie');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente','vorschriften_hinweisweiteredokumente');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.LocalisedMText','localisedmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionZustaendigeStelle','transferstruktur_hinweisdefinitionzustaendigestelle');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel','vorschriften_artikel');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V1_1.RechtsStatus','rechtsstatus');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition','transferstruktur_hinweisdefinition');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V1_1.ArtikelNummer_','artikelnummer_');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung','transferstruktur_grundlageverfeinerung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.LocalisedMText','localisationch_v1_localisedmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V1_1.LocalisedUri','localiseduri');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Rechtsvorschrift','vorschriften_rechtsvorschrift');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument','transferstruktur_hinweisdefinitiondokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis','vorschriften_dokumentbasis');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V1_1.MultilingualUri','multilingualuri');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument','transferstruktur_hinweisdefinitiondokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst','transferstruktur_legendedarstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','transferstruktur_zustaendigestelleeigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung','transferstruktur_geometrieeigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.MultilingualBlob','multilingualblob');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.LocalisedUri','localiseduri');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst','transferstruktur_darstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.RechtsStatus','rechtsstatus');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung','transferstruktur_grundlageverfeinerung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.LocalisedBlob','localisedblob');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie','transferstruktur_geometrie');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.MultilingualUri','multilingualuri');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.MultilingualText','localisationch_v1_multilingualtext');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument','vorschriften_dokument');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('LocalisationCH_V1.LocalisedText','localisationch_v1_localisedtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','transferstruktur_darstellungsdiensteigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('Localisation_V1.MultilingualMText','multilingualmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag','transferstruktur_legendeeintrag');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','transferstruktur_darstellungsdiensteigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.DokumentTyp','dokumenttyp');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRM_V2_0.Amt.Amt','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag','transferstruktur_legendeeintrag');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('CHAdminCodes_V1.CHCantonCode','chcantoncode');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GeometrieEigentumsbeschraenkung','transferstruktur_geometrieeigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift','transferstruktur_hinweisvorschrift');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.TextImWeb','vorschriften_dokument_textimweb','multilingualuri','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.ZustaendigeStelleDokument.ZustaendigeStelle','zustaendigestelle','vorschriften_dokument','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Linie_LV03','linie_lv03','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.Thema','thema','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_hinweisvorschrift','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt.UID','auid','vorschriften_amt',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.Aussage','aussage','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt.AmtImWeb','amtimweb','vorschriften_amt',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung.Verfeinerung','verfeinerung','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionZustaendigeStelle.ZustaendigeStelle','zustaendigestelle','transferstruktur_hinweisdefinition','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V1_1.ArtikelNummer_.value','avalue','artikelnummer_',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.LegendeText','legendetext','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente.ArtikelNr','vorschrftn_wswtrdkmnte_artikelnr','artikelnummer_','vorschriften_hinweisweiteredokumente');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst.LegendeImWeb','legendeimweb','transferstruktur_darstellungsdienst',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.Rechtsstatus','rechtsstatus','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.ArtCodeliste','artcodeliste','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Titel','titel','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift.Vorschrift','vorschrift_vorschriften_artikel','transferstruktur_hinweisvorschrift','vorschriften_artikel');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.OffiziellerTitel','offiziellertitel','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument.HinweisDefinition','hinweisdefinition','transferstruktur_hinweisdefinitiondokument','transferstruktur_hinweisdefinition');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Gemeinde','gemeinde','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument.Dokument','dokument','transferstruktur_hinweisdefinitiondokument','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V1_1.MultilingualUri.LocalisedText','multilingualuri_localisedtext','localiseduri','multilingualuri');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Punkt_LV03','punkt_lv03','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.publiziertAb','publiziertab','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift.Vorschrift','vorschrift_vorschriften_dokument','transferstruktur_hinweisvorschrift','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Abkuerzung','abkuerzung','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.ArtCode','artcode','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle','transferstruktur_hinweisdefinitionzustaendigestelle');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_CLASSNAME (IliName,SqlName) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie','transferstruktur_zustaendigestellegeometrie');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.TextImWeb','vorschriften_dokument_textimweb','multilingualuri','vorschriften_dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolLinie','symbollinie','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung.ZustaendigeStelle','zustaendigestelle','transferstruktur_eigentumsbeschraenkung','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertBis','publiziertbis','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.NurInGemeinde','nuringemeinde','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie.ZustaendigeStelle','zustaendigestelle','transferstruktur_geometrie','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ThemaRef.SubThema','subthema','themaref',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Ort','ort','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SubThema','subthema','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle.ZustaendigeStelle','zustaendigestelle','transferstruktur_hinweisdefinition','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Kanton','kanton','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Kanton','kanton','transferstruktur_hinweisdefinition',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument.HinweisDefinition','hinweisdefinition','transferstruktur_hinweisdefinitiondokument','transferstruktur_hinweisdefinition');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Rechtsstatus','rechtsstatus','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Flaeche_LV95','flaeche_lv95','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung.Verfeinerung','verfeinerung','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolPunkt','symbolpunkt','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedUri.Text','atext','localiseduri',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Linie_LV95','linie_lv95','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Thema','thema','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument.Dokument','dokument','transferstruktur_hinweisdefinitiondokument','vorschriften_dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Name','aname','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.publiziertBis','publiziertbis','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.OffizielleNr','offiziellenr','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.Rechtsstatus','rechtsstatus','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.UID','auid','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Titel','titel','vorschriften_dokument',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedText.Text','atext','localisedtext',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleGeometrie.ZustaendigeStelle','zustaendigestelle','transferstruktur_geometrie','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V1_1.LocalisedUri.Text','atext','localiseduri',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.publiziertAb','publiziertab','vorschriften_artikel',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst.VerweisWMS','verweiswms','transferstruktur_darstellungsdienst',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Flaeche_LV95','flaeche_lv95','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.MultilingualMText.LocalisedText','multilingualmtext_localisedtext','localisedmtext','multilingualmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Linie_LV95','linie_lv95','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.Rechtsstatus','rechtsstatus','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GeometrieEigentumsbeschraenkung.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_geometrie','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.AmtImWeb','amt_amt_amtimweb','multilingualuri','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedUri.Language','alanguage','localiseduri',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument.ZustaendigeStelle','zustaendigestelle','vorschriften_dokument','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCode','artcode','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.MetadatenGeobasisdaten','metadatengeobasisdaten','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile2','zeile2','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Strasse','strasse','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Dokument','vorschriften_dokument_dokument','multilingualblob','vorschriften_dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.publiziertAb','publiziertab','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedBlob.Language','alanguage','localisedblob',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.SymbolFlaeche','symbolflaeche','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Gemeinde','gemeinde','vorschriften_dokument',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.MultilingualText.LocalisedText','multilingualtext_localisedtext','localisedtext','multilingualtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedMText.Language','alanguage','localisedmtext',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung.ZustaendigeStelle','zustaendigestelle','transferstruktur_eigentumsbeschraenkung','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Flaeche_LV03','flaeche_lv03','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst.Legende','transfrstrkstllngsdnst_legende','transferstruktur_legendeeintrag','transferstruktur_darstellungsdienst');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Punkt_LV95','punkt_lv95','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.ArtCode','artcode','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.SubThema','subthema','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift.ArtikelNr','transfrstrkwsvrschrift_artikelnr','artikelnummer_','transferstruktur_hinweisvorschrift');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.Rechtsstatus','rechtsstatus','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V1_1.LocalisedUri.Language','alanguage','localiseduri',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.OffizielleNr','offiziellenr','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition.Gemeinde','gemeinde','transferstruktur_hinweisdefinition',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel.Nr','nr','vorschriften_artikel',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.Symbol','symbol','transferstruktur_legendeeintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Dokument','dokument','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.ArtCodeliste','artcodeliste','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.publiziertAb','publiziertab','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedMText.Text','atext','localisedmtext',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung.DarstellungsDienst','darstellungsdienst','transferstruktur_eigentumsbeschraenkung','transferstruktur_darstellungsdienst');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt.Name','aname','vorschriften_amt',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.Rechtsstatus','rechtsstatus','vorschriften_artikel',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.Thema','thema','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel.Text','atext','vorschriften_artikel',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente.Hinweis','hinweis','vorschriften_hinweisweiteredokumente','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie.MetadatenGeobasisdaten','metadatengeobasisdaten','transferstruktur_geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition.Thema','thema','transferstruktur_hinweisdefinition',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.TextImWeb','vorschriften_artikel_textimweb','multilingualuri','vorschriften_artikel');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.SubThema','subthema','transferstruktur_eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentArtikel.Dokument','dokument','vorschriften_artikel','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition.Kanton','kanton','transferstruktur_hinweisdefinition',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente.Ursprung','ursprung','vorschriften_hinweisweiteredokumente','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Kanton','kanton','vorschriften_dokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis.publiziertAb','publiziertab','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.publiziertAb','publiziertab','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualBlob.LocalisedBlob','multilingualblob_localisedblob','localisedblob','multilingualblob');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Hausnr','hausnr','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.publiziertAb','publiziertab','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst.VerweisWMS','transfrstrkstllngsdnst_verweiswms','multilingualuri','transferstruktur_darstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung.DarstellungsDienst','darstellungsdienst','transferstruktur_eigentumsbeschraenkung','transferstruktur_darstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.Thema','thema','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung.Grundlage','grundlage','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Gemeinde','gemeinde','transferstruktur_hinweisdefinition',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.ThemaRef.Thema','thema','themaref',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift.Vorschrift','vorschrift','transferstruktur_hinweisvorschrift','vorschriften_dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.LegendeText','legendetext','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.MultilingualUri.LocalisedText','multilingualuri_localisedtext','localiseduri','multilingualuri');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_geometrie','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst.DarstellungsDienst','darstellungsdienst','transferstruktur_legendeeintrag','transferstruktur_darstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.publiziertBis','publiziertbis','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Typ','typ','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.PLZ','plz','amt_amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift.Eigentumsbeschraenkung','eigentumsbeschraenkung','transferstruktur_hinweisvorschrift','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Abkuerzung','abkuerzung','vorschriften_dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Rechtsstatus','rechtsstatus','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung.SubThema','subthema','transferstruktur_eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie.Punkt_LV95','punkt_lv95','transferstruktur_geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.LocalisedBlob.Blob','ablob','localisedblob',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende.Legende','legende','transferstruktur_eigentumsbeschraenkung','transferstruktur_legendeeintrag');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('Localisation_V1.LocalisedText.Language','alanguage','localisedtext',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung.Grundlage','grundlage','transferstruktur_grundlageverfeinerung','transferstruktur_eigentumsbeschraenkung');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition.Thema','transfrstrkhnwsdfntion_thema','themaref','transferstruktur_hinweisdefinition');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.ArtCodeliste','artcodeliste','transferstruktur_legendeeintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_ATTRNAME (IliName,SqlName,ColOwner,Target) VALUES ('OeREBKRM_V2_0.Amt.Amt.Zeile1','zeile1','amt_amt',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.MultilingualText','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V1_1.ArtikelInhaltMehrsprachig','ch.ehi.ili2db.inheritance','superClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.ZustaendigeStelleDokument','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleGeometrie','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.MultilingualMText','ch.ehi.ili2db.inheritance','superClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentArtikel','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.ThemaRef','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.OffizielleNr','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.LocalisedText','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.LocalisedMText','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionZustaendigeStelle','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V1_1.ArtikelNummer_','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.LocalisedMText','ch.ehi.ili2db.inheritance','superClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V1_1.LocalisedUri','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Rechtsvorschrift','ch.ehi.ili2db.inheritance','superClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.OffiziellerTitel','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag.LegendeText','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis','ch.ehi.ili2db.inheritance','subClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt.Name','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V1_1.MultilingualUri','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung.Aussage','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.MultilingualBlob','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.LocalisedUri','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.Amt.Amt.Name','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument.Abkuerzung','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.LocalisedBlob','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag.LegendeText','ch.ehi.ili2db.multilingualTrafo','expand');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.MultilingualUri','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.MultilingualText','ch.ehi.ili2db.inheritance','superClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument','ch.ehi.ili2db.inheritance','newClass');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('LocalisationCH_V1.LocalisedText','ch.ehi.ili2db.inheritance','superClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Titel','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('Localisation_V1.MultilingualMText','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GeometrieEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel.Text','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument.Abkuerzung','ch.ehi.ili2db.multilingualTrafo','expand');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift','ch.ehi.ili2db.inheritance','newClass');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Geometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Dokument','OeREBKRMvs_V1_1.Vorschriften.DokumentBasis');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRM_V2_0.Amt.Amt','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag','ch.ehi.ili2db.inheritance','newClass');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TRAFO (iliname,tag,setting) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie','ch.ehi.ili2db.inheritance','embedded');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedUri',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.MultilingualText',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.HinweisWeitereDokumente',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionZustaendigeStelle',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualMText','Localisation_V1.MultilingualMText');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V1_1.ArtikelNummer_',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.Eigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.LegendeEintrag',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentArtikel',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualText','Localisation_V1.MultilingualText');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Amt',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GrundlageVerfeinerung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisVorschrift',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinitionDokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Artikel','OeREBKRMvs_V1_1.Vorschriften.DokumentBasis');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V1_1.ArtikelInhaltMehrsprachig','LocalisationCH_V1.MultilingualMText');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienst',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.LocalisedMText','Localisation_V1.LocalisedMText');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.ZustaendigeStelleDokument',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.DokumentBasis',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.ZustaendigeStelleGeometrie',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V1_1.MultilingualUri',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.LocalisedMText',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienst',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionDokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.ThemaRef',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleEigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V2_0.Vorschriften.ZustaendigeStelleDokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Eigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeEintrag',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.DarstellungsDienstEigentumsbeschraenkung',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.LocalisedText',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.HinweisDefinition',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V1_1.Transferstruktur.GeometrieEigentumsbeschraenkung',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('Localisation_V1.MultilingualMText',NULL);
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V1_1.LocalisedUri',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinitionZustaendigeStelle',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.ZustaendigeStelleGeometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.Geometrie',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisVorschrift',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.MultilingualUri',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.Amt.Amt',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.EigentumsbeschraenkungLegende',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.HinweisDefinition',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.LegendeDarstellungsdienst',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.MultilingualText','Localisation_V1.MultilingualText');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.LocalisedBlob',NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('LocalisationCH_V1.LocalisedText','Localisation_V1.LocalisedText');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V1_1.Vorschriften.Rechtsvorschrift','OeREBKRMvs_V1_1.Vorschriften.Dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GeometrieEigentumsbeschraenkung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMtrsfr_V2_0.Transferstruktur.GrundlageVerfeinerung',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRM_V2_0.MultilingualBlob',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_INHERITANCE (thisClass,baseClass) VALUES ('OeREBKRMvs_V2_0.Vorschriften.Dokument',NULL);
+INSERT INTO afu_grundwasserschutz_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Rechtsvorschrift',0,'Rechtsvorschrift',FALSE,NULL);
+INSERT INTO afu_grundwasserschutz_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'GesetzlicheGrundlage',1,'GesetzlicheGrundlage',FALSE,NULL);
+INSERT INTO afu_grundwasserschutz_oereb.dokumenttyp (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'Hinweis',2,'Hinweis',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'de',0,'de',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'fr',1,'fr',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.languagecode_iso639_1 (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'it',2,'it',FALSE,NULL);
@@ -898,16 +835,10 @@ INSERT INTO afu_grundwasserschutz_oereb.chcantoncode (seq,iliCode,itfCode,dispNa
 INSERT INTO afu_grundwasserschutz_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'FL',26,'FL',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.chcantoncode (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'CH',27,'CH',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'inKraft',0,'inKraft',FALSE,'Die Eigentumsbeschränkung ist in Kraft.');
-INSERT INTO afu_grundwasserschutz_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'laufendeAenderung',1,'laufendeAenderung',FALSE,'gem. OeREBKV Art. 12 Abs. 2');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.coordDimension','2');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.c1Max','870000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.c2Max','310000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.geomType','POINT');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.c1Min','460000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.c2Min','45000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv03','ch.ehi.ili2db.srid','21781');
+INSERT INTO afu_grundwasserschutz_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AenderungMitVorwirkung',1,'AenderungMitVorwirkung',FALSE,NULL);
+INSERT INTO afu_grundwasserschutz_oereb.rechtsstatus (seq,iliCode,itfCode,dispName,inactive,description) VALUES (NULL,'AenderungOhneVorwirkung',2,'AenderungOhneVorwirkung',FALSE,NULL);
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localiseduri',NULL,'multilingualuri_localisedtext','ch.ehi.ili2db.foreignKey','multilingualuri');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'atext','ch.ehi.ili2db.textKind','MTEXT');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'legende','ch.ehi.ili2db.foreignKey','transferstruktur_legendeeintrag');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -915,10 +846,8 @@ INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c1Min','2460000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.c2Min','1045000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv95','ch.ehi.ili2db.srid','2056');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'amt_amt_amtimweb','ch.ehi.ili2db.foreignKey','amt_amt');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'eigentumsbeschraenkung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'vorschrift_vorschriften_dokument','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('artikelnummer_',NULL,'transfrstrkwsvrschrift_artikelnr','ch.ehi.ili2db.foreignKey','transferstruktur_hinweisvorschrift');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_localisedmtext","localisedmtext"]');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -928,41 +857,21 @@ INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv95','ch.ehi.ili2db.srid','2056');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedtext',NULL,'multilingualtext_localisedtext','ch.ehi.ili2db.foreignKey','multilingualtext');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument',NULL,'hinweisdefinition','ch.ehi.ili2db.foreignKey','transferstruktur_hinweisdefinition');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.coordDimension','2');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.c1Max','870000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.c2Max','310000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.geomType','POLYGON');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.c1Min','460000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.c2Min','45000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'flaeche_lv03','ch.ehi.ili2db.srid','21781');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'darstellungsdienst','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_artikel',NULL,'dokument','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'eigentumsbeschraenkung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinition',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('artikelnummer_',NULL,'vorschrftn_wswtrdkmnte_artikelnr','ch.ehi.ili2db.foreignKey','vorschriften_hinweisweiteredokumente');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_hinweisweiteredokumente',NULL,'ursprung','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','vorschriften_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'transfrstrkstllngsdnst_verweiswms','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinition',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung',NULL,'grundlage','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_hinweisweiteredokumente',NULL,'hinweis','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'vorschrift_vorschriften_artikel','ch.ehi.ili2db.foreignKey','vorschriften_artikel');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_legendeeintrag',NULL,'transfrstrkstllngsdnst_legende','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_dokument',NULL,'T_Type','ch.ehi.ili2db.types','["vorschriften_dokument","vorschriften_rechtsvorschrift"]');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_legendeeintrag',NULL,'darstellungsdienst','ch.ehi.ili2db.foreignKey','transferstruktur_darstellungsdienst');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument',NULL,'dokument','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.coordDimension','2');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.c1Max','870000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.c2Max','310000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.geomType','LINESTRING');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.c1Min','460000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.c2Min','45000.000');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'linie_lv03','ch.ehi.ili2db.srid','21781');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('themaref',NULL,'transfrstrkhnwsdfntion_thema','ch.ehi.ili2db.foreignKey','transferstruktur_hinweisdefinition');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedblob',NULL,'multilingualblob_localisedblob','ch.ehi.ili2db.foreignKey','multilingualblob');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_localisedtext","localisedtext"]');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('localisedmtext',NULL,'multilingualmtext_localisedtext','ch.ehi.ili2db.foreignKey','multilingualmtext');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'vorschriften_artikel_textimweb','ch.ehi.ili2db.foreignKey','vorschriften_artikel');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualtext',NULL,'T_Type','ch.ehi.ili2db.types','["localisationch_v1_multilingualtext","multilingualtext"]');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung',NULL,'verfeinerung','ch.ehi.ili2db.foreignKey','transferstruktur_eigentumsbeschraenkung');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualuri',NULL,'vorschriften_dokument_textimweb','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualmtext',NULL,'T_Type','ch.ehi.ili2db.types','["artikelinhaltmehrsprachig","localisationch_v1_multilingualmtext","multilingualmtext"]');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.coordDimension','2');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c1Max','2870000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c2Max','1310000.000');
@@ -970,29 +879,30 @@ INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c1Min','2460000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.c2Min','1045000.000');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_geometrie',NULL,'punkt_lv95','ch.ehi.ili2db.srid','2056');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_dokument',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','vorschriften_amt');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualmtext','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('multilingualblob',NULL,'vorschriften_dokument_dokument','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('vorschriften_dokument',NULL,'zustaendigestelle','ch.ehi.ili2db.foreignKey','amt_amt');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_COLUMN_PROP (tablename,subtype,columnname,tag,setting) VALUES ('transferstruktur_hinweisvorschrift',NULL,'vorschrift','ch.ehi.ili2db.foreignKey','vorschriften_dokument');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localiseduri','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('vorschriften_hinweisweiteredokumente','ch.ehi.ili2db.tableKind','ASSOCIATION');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('vorschriften_artikel','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualblob','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('rechtsstatus','ch.ehi.ili2db.tableKind','ENUM');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualuri','ch.ehi.ili2db.tableKind','STRUCTURE');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedmtext','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_darstellungsdienst','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_eigentumsbeschraenkung','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinitiondokument','ch.ehi.ili2db.tableKind','ASSOCIATION');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('vorschriften_amt','ch.ehi.ili2db.tableKind','CLASS');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_geometrie','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedtext','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_geometrie','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('multilingualtext','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_grundlageverfeinerung','ch.ehi.ili2db.tableKind','ASSOCIATION');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('dokumenttyp','ch.ehi.ili2db.tableKind','ENUM');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('localisedblob','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('languagecode_iso639_1','ch.ehi.ili2db.tableKind','ENUM');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('artikelnummer_','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('themaref','ch.ehi.ili2db.tableKind','STRUCTURE');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisdefinition','ch.ehi.ili2db.tableKind','CLASS');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('amt_amt','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_hinweisvorschrift','ch.ehi.ili2db.tableKind','ASSOCIATION');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('chcantoncode','ch.ehi.ili2db.tableKind','ENUM');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('vorschriften_dokument','ch.ehi.ili2db.tableKind','CLASS');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_legendeeintrag','ch.ehi.ili2db.tableKind','STRUCTURE');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_TABLE_PROP (tablename,tag,setting) VALUES ('transferstruktur_legendeeintrag','ch.ehi.ili2db.tableKind','CLASS');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part4_ADMINISTRATIVEUNITS_20110830.ili','2.3','CHAdminCodes_V1 AdministrativeUnits_V1{ CHAdminCodes_V1 InternationalCodes_V1 Dictionaries_V1 Localisation_V1 INTERLIS} AdministrativeUnitsCH_V1{ CHAdminCodes_V1 InternationalCodes_V1 LocalisationCH_V1 AdministrativeUnits_V1 INTERLIS}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
    ======
@@ -1213,95 +1123,7 @@ MODEL AdministrativeUnitsCH_V1 (en)
 END AdministrativeUnitsCH_V1.
 
 !! ########################################################################
-','2020-07-05 19:17:43.37');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part3_CATALOGUEOBJECTS_20110830.ili','2.3','CatalogueObjects_V1{ INTERLIS} CatalogueObjectTrees_V1{ INTERLIS CatalogueObjects_V1}','/* ########################################################################
-   CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
-   ======
-   BASISMODULE DES BUNDES           MODULES DE BASE DE LA CONFEDERATION
-   FÜR MINIMALE GEODATENMODELLE     POUR LES MODELES DE GEODONNEES MINIMAUX
-   
-   PROVIDER: GKG/KOGIS - GCS/COSIG             CONTACT: models@geo.admin.ch
-   PUBLISHED: 2011-08-30
-   ########################################################################
-*/
-
-INTERLIS 2.3;
-
-/* ########################################################################
-   ########################################################################
-   PART III -- CATALOGUE OBJECTS
-   - Package CatalogueObjects
-   - Package CatalogueObjectTrees
-*/
-
-!! ########################################################################
-!!@technicalContact=models@geo.admin.ch
-!!@furtherInformation=http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html
-MODEL CatalogueObjects_V1 (en)
-  AT "http://www.geo.admin.ch" VERSION "2011-08-30" =
-
-  IMPORTS UNQUALIFIED INTERLIS;
-
-  TOPIC Catalogues (ABSTRACT) =
-
-    CLASS Item (ABSTRACT) =
-    END Item;
-
-    STRUCTURE CatalogueReference (ABSTRACT) =
-      Reference: REFERENCE TO (EXTERNAL) Item;
-    END CatalogueReference;
- 
-    STRUCTURE MandatoryCatalogueReference (ABSTRACT) =
-      Reference: MANDATORY REFERENCE TO (EXTERNAL) Item;
-    END MandatoryCatalogueReference;
-
-  END Catalogues;
-
-END CatalogueObjects_V1.
-
-!! ########################################################################
-!!@technicalContact=models@geo.admin.ch
-!!@furtherInformation=http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html
-MODEL CatalogueObjectTrees_V1 (en)
-  AT "http://www.geo.admin.ch" VERSION "2011-08-30" =
-
-  IMPORTS UNQUALIFIED INTERLIS;
-  IMPORTS CatalogueObjects_V1;
-
-  TOPIC Catalogues (ABSTRACT) EXTENDS CatalogueObjects_V1.Catalogues =
-
-    CLASS Item (ABSTRACT,EXTENDED) = 
-      IsSuperItem: MANDATORY BOOLEAN;
-      IsUseable: MANDATORY BOOLEAN;
-    MANDATORY CONSTRAINT
-      IsSuperItem OR IsUseable;
-    END Item;
-
-    ASSOCIATION EntriesTree =
-      Parent -<#> Item;
-      Child -- Item;
-    MANDATORY CONSTRAINT
-      Parent->IsSuperItem;
-    END EntriesTree;
-
-    STRUCTURE CatalogueReference (ABSTRACT,EXTENDED) =
-      Reference(EXTENDED): REFERENCE TO (EXTERNAL) Item;
-    MANDATORY CONSTRAINT
-      Reference->IsUseable;
-    END CatalogueReference;
- 
-    STRUCTURE MandatoryCatalogueReference (ABSTRACT,EXTENDED) =
-      Reference(EXTENDED): MANDATORY REFERENCE TO (EXTERNAL) Item;
-    MANDATORY CONSTRAINT
-      Reference->IsUseable;
-    END MandatoryCatalogueReference;
-
-  END Catalogues;
-
-END CatalogueObjectTrees_V1.
-
-!! ########################################################################
-','2020-07-05 19:17:43.37');
+','2020-07-09 17:19:07.917');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('Units-20120220.ili','2.3','Units','!! File Units.ili Release 2012-02-20
 
 INTERLIS 2.3;
@@ -1399,182 +1221,140 @@ CONTRACTED TYPE MODEL Units (en) AT "http://www.interlis.ch/models"
 
 END Units.
 
-','2020-07-05 19:17:43.37');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMtrsfr_V1_1.ili','2.3','OeREBKRMtrsfr_V1_1{ GeometryCHLV95_V1 CHAdminCodes_V1 LocalisationCH_V1 GeometryCHLV03_V1 OeREBKRM_V1_1 OeREBKRMvs_V1_1}','INTERLIS 2.3;
+','2020-07-09 17:19:07.917');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRM_V2_0.ili','2.3','OeREBKRM_V2_0{ InternationalCodes_V1 LocalisationCH_V1}','INTERLIS 2.3;
 
-/** Schnittstelle zwischen zuständiger Stelle für die Geobasisdaten und Katasterorganisation des Kantons.
+/** Basisdefinitionen für das OEREB-Katasterrahmenmodell
  */
-!!@ furtherInformation=http://www.cadastre.ch/oereb-public
-!!@ technicalContact=mailto:infovd@swisstopo.ch
-MODEL OeREBKRMtrsfr_V1_1 (de)
-AT "http://models.geo.admin.ch/V_D/OeREB/"
-VERSION "2020-05-18"  =
-  IMPORTS OeREBKRM_V1_1,OeREBKRMvs_V1_1,CHAdminCodes_V1,LocalisationCH_V1,GeometryCHLV03_V1,GeometryCHLV95_V1;
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRM_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS LocalisationCH_V1,InternationalCodes_V1;
 
-  /** Dieses Teilmodell definiert die Struktur der Daten, wie sie von der zuständigen Stelle für die Geobasisdaten an die Abgabestelle des ÖREB-Kataster-Auszugs geliefert werden müssen. Dieses Datenmodell definiert somit, welche Daten ein minimales Datenmodell enthalten muss, um als ÖREB-Kataster fähiges Datenmodell zu gelten.
+  DOMAIN
+
+    /** Themenspezifische, maschinen-lesbare Art der Eigentumsbeschränkung
+     */
+    ArtEigentumsbeschraenkung = TEXT*40;
+
+    /** Nummer eines Artikels in einer Rechtsvorschrift oder gesetzlichen Grundlage.
+     */
+    ArtikelNummer = TEXT*20;
+
+    Datum = FORMAT INTERLIS.XMLDate "1848-1-1" .. "2100-12-31";
+
+    DokumentTyp = (
+      Rechtsvorschrift,
+      GesetzlicheGrundlage,
+      Hinweis
+    );
+
+    /** gem. DM01 der AV
+     */
+    GrundstueckArt = (
+      Liegenschaft,
+      SelbstRecht(
+        Baurecht,
+        Quellenrecht,
+        Konzessionsrecht,
+        weitere
+      ),
+      Bergwerk
+    );
+
+    /** Wertebereich für Objektidentifikatoren. Der Wert soll mit einem gültigen Internet Domain-Name anfangen, z.B. "ch.admin.sr.720"
+     */
+    OEREBOID = OID TEXT;
+
+    /** Werteliste zur Unterscheidung ob eine Eigentumsbeschränkung in Kraft ist oder nicht.
+     */
+    RechtsStatus = (
+      /** Die Eigentumsbeschränkung ist in Kraft.
+       */
+      inKraft,
+      AenderungMitVorwirkung,
+      AenderungOhneVorwirkung
+    );
+
+    /** Code für ein Thema oder Sub-Thema.
+     * Der Code wird nach folgendem Muster gebildet:
+     * ch.{topic}
+     * ch.{canton}.{topic}
+     * fl.{topic}
+     * ch.{bfsnr}.{topic}
+     * Wobei {canton} das offizielle zwei-stellige Kürzel des Kantons ist, {topic} der Themenname und {bfsnr} die Gemeindenummer gem. BFS.
+     */
+    Thema = TEXT*120;
+
+    /** Unternehmensindentifikation (gemäss. Bundesgesetz über die Unternehmens-Identifikationsnummer SR 431.03) ohne Formatierung z.B. CHE116068369
+     */
+    UID = TEXT*12;
+
+    /** Verweis auf ein Dokument im Web (z.B. eine HTML Seite oder ein PDF-Dokument)
+     */
+    WebReferenz = URI;
+  STRUCTURE ArtikelNummer_ = value : MANDATORY ArtikelNummer; END ArtikelNummer_;
+  STRUCTURE Datum_ = value : MANDATORY Datum; END Datum_;
+  STRUCTURE Thema_ = value : MANDATORY Thema; END Thema_;
+  STRUCTURE WebReferenz_ = value : MANDATORY WebReferenz; END WebReferenz_;
+
+  STRUCTURE LocalisedBlob =
+    Language : InternationalCodes_V1.LanguageCode_ISO639_1;
+    Blob : MANDATORY BLACKBOX BINARY;
+  END LocalisedBlob;
+
+  STRUCTURE LocalisedUri =
+    Language : InternationalCodes_V1.LanguageCode_ISO639_1;
+    Text : MANDATORY URI;
+  END LocalisedUri;
+
+  STRUCTURE MultilingualBlob =
+    LocalisedBlob : BAG {1..*} OF OeREBKRM_V2_0.LocalisedBlob;
+    UNIQUE (LOCAL) LocalisedBlob:Language;
+  END MultilingualBlob;
+
+  STRUCTURE MultilingualUri =
+    LocalisedText : BAG {1..*} OF OeREBKRM_V2_0.LocalisedUri;
+    UNIQUE (LOCAL) LocalisedText:Language;
+  END MultilingualUri;
+
+  /** Qualifzierter Verweis auf ein Thema oder Subthema.
    */
-  TOPIC Transferstruktur
-  EXTENDS OeREBKRMvs_V1_1.Vorschriften =
-    DEPENDS ON OeREBKRMvs_V1_1.HinweiseGesetzlicheGrundlagen;
+  STRUCTURE ThemaRef =
+    Thema : MANDATORY Thema;
+    SubThema : Thema;
+  END ThemaRef;
 
-    /** Wurzelelement für Informationen über eine Beschränkung des Grundeigentums, die rechtskräftig, z.B. auf Grund einer Genehmigung oder eines richterlichen Entscheids, zustande gekommen ist.
+  TOPIC Amt =
+    OID AS OEREBOID;
+
+    /** Eine organisatorische Einheit innerhalb der öffentlichen Verwaltung, z.B. eine für Geobasisdaten zuständige Stelle.
      */
-    CLASS Eigentumsbeschraenkung =
-      /** Textliche Beschreibung der Beschränkung; z.B. "Wohnen W3"
+    CLASS Amt =
+      /** Name des Amtes z.B. "Amt für Gemeinden und Raumordnung des Kantons Bern".
        */
-      Aussage : MANDATORY LocalisationCH_V1.MultilingualMText;
-      /** Einordnung der Eigentumsbeschränkung in ein ÖREBK-Thema
+      Name : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Verweis auf die Website des Amtes z.B. "http://www.jgk.be.ch/jgk/de/index/direktion/organisation/agr.html".
        */
-      Thema : MANDATORY OeREBKRM_V1_1.Thema;
-      /** z.B. Planungszonen innerhalb Nutzungsplanung
+      AmtImWeb : OeREBKRM_V2_0.MultilingualUri;
+      /** UID der organisatorischen Einheit
        */
-      SubThema : OeREBKRM_V1_1.Thema;
-      /** Themenspezifische, maschinen-lesbare Art gem. Originalmodell der Eigentumsbeschränkung
-       */
-      ArtCode : OeREBKRM_V1_1.ArtEigentumsbeschraenkung;
-      /** Identifikation der Codeliste bzw. des Wertebereichs für ArtCode
-       */
-      ArtCodeliste : URI;
-      /** Status, ob diese Eigentumsbeschränkung in Kraft ist
-       */
-      Rechtsstatus : MANDATORY OeREBKRM_V1_1.RechtsStatus;
-      /** Datum, ab dem diese Eigentumsbeschränkung in Auszügen erscheint
-       */
-      publiziertAb : MANDATORY OeREBKRM_V1_1.Datum;
-    END Eigentumsbeschraenkung;
+      UID : OeREBKRM_V2_0.UID;
+      Zeile1 : TEXT*80;
+      Zeile2 : TEXT*80;
+      Strasse : TEXT*100;
+      Hausnr : TEXT*7;
+      PLZ : TEXT*4;
+      Ort : TEXT*60;
+      UNIQUE UID;
+    END Amt;
 
-    /** Punkt-, linien-, oder flächenförmige Geometrie. Neu zu definierende Eigentumsbeschränkungen sollten i.d.R. flächenförmig sein.
-     */
-    CLASS Geometrie =
-      /** Punktgeometrie
-       */
-      Punkt_LV03 : GeometryCHLV03_V1.Coord2;
-      Punkt_LV95 : GeometryCHLV95_V1.Coord2;
-      /** Linienförmige Geometrie
-       */
-      Linie_LV03 : GeometryCHLV03_V1.Line;
-      Linie_LV95 : GeometryCHLV95_V1.Line;
-      /** Flächenförmige Geometrie
-       */
-      Flaeche_LV03 : GeometryCHLV03_V1.Surface;
-      Flaeche_LV95 : GeometryCHLV95_V1.Surface;
-      /** Status, ob diese Geometrie in Kraft ist
-       */
-      Rechtsstatus : MANDATORY OeREBKRM_V1_1.RechtsStatus;
-      /** Datum, ab dem diese Geometrie in Auszügen erscheint
-       */
-      publiziertAb : MANDATORY OeREBKRM_V1_1.Datum;
-      /** Verweis auf maschinenlesbare Metadaten (XML) der zugrundeliegenden Geobasisdaten. z.B. http://www.geocat.ch/geonetwork/srv/deu/gm03.xml?id=705
-       */
-      MetadatenGeobasisdaten : URI;
-      MANDATORY CONSTRAINT DEFINED(Punkt_LV03) OR DEFINED(Linie_LV03) OR DEFINED(Flaeche_LV03) OR DEFINED(Punkt_LV95) OR DEFINED(Linie_LV95) OR DEFINED(Flaeche_LV95);
-    END Geometrie;
+  END Amt;
 
-    /** Definition für Hinweise, die unabhängig von einer konkreten Eigentumsbeschränkung gelten (z.B. der Hinweis auf eine Systematische Rechtssammlung). Der Hinweis kann aber beschränkt werden auf eine bestimmtes ÖREB-Thema und/oder Kanton und/oder Gemeinde.
-     */
-    CLASS HinweisDefinition =
-      /** Thema falls der Hinweis für ein bestimmtes ÖREB-Thema gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle ÖREB-Themen gilt.
-       */
-      Thema : OeREBKRM_V1_1.Thema;
-      /** Kantonskürzel falls der Hinweis für ein Kantons-oder Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle Kantone gilt. z.B. "BE".
-       */
-      Kanton : CHAdminCodes_V1.CHCantonCode;
-      /** BFSNr falls der Hinweis für ein Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für den Kanton oder die Schweiz gilt. z.B. "942".
-       */
-      Gemeinde : CHAdminCodes_V1.CHMunicipalityCode;
-    END HinweisDefinition;
-
-    /** Ein Eintrag in der Planlegende.
-     */
-    STRUCTURE LegendeEintrag =
-      /** Grafischer Teil des Legendeneintrages für die Darstellung. Im PNG-Format mit 300dpi oder im SVG-Format
-       */
-      Symbol : MANDATORY BLACKBOX BINARY;
-      /** Text des Legendeneintrages
-       */
-      LegendeText : MANDATORY LocalisationCH_V1.MultilingualText;
-      /** Art der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird
-       */
-      ArtCode : MANDATORY OeREBKRM_V1_1.ArtEigentumsbeschraenkung;
-      /** Codeliste der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird
-       */
-      ArtCodeliste : MANDATORY URI;
-      /** Zu welchem ÖREB-Thema der Legendeneintrag gehört
-       */
-      Thema : MANDATORY OeREBKRM_V1_1.Thema;
-      /** z.B. Planungszonen innerhalb Nutzungsplanung
-       */
-      SubThema : OeREBKRM_V1_1.Thema;
-    END LegendeEintrag;
-
-    /** Angaben zum Darstellungsdienst.
-     */
-    CLASS DarstellungsDienst =
-      /** WMS GetMap-Request (für Maschine-Maschine-Kommunikation) inkl. alle benötigten Parameter, z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&STYLES=default&SRS=EPSG:21781&BBOX=475000,60000,845000,310000&WIDTH=740&HEIGHT=500&FORMAT=image/png&LAYERS=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"
-       */
-      VerweisWMS : MANDATORY URI;
-      /** Verweis auf ein Dokument das die Karte beschreibt; z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetLegendGraphic&VERSION=1.1.1&FORMAT=image/png&LAYER=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"
-       */
-      LegendeImWeb : OeREBKRM_V1_1.WebReferenz;
-      Legende : BAG {0..*} OF LegendeEintrag;
-      MANDATORY CONSTRAINT DEFINED(LegendeImWeb) OR INTERLIS.elementCount(Legende)>0;
-    END DarstellungsDienst;
-
-    ASSOCIATION GeometrieEigentumsbeschraenkung =
-      /** Geometrie der Eigentumsbeschränkung, die Rechtswirkung hat (als Basis für den Verschnitt mit den Liegenschaften)
-       */
-      Geometrie -- {0..*} Geometrie;
-      Eigentumsbeschraenkung -<#> {1} Eigentumsbeschraenkung;
-    END GeometrieEigentumsbeschraenkung;
-
-    ASSOCIATION GrundlageVerfeinerung =
-      Grundlage (EXTERNAL) -- {0..*} Eigentumsbeschraenkung;
-      Verfeinerung -- {0..*} Eigentumsbeschraenkung;
-    END GrundlageVerfeinerung;
-
-    ASSOCIATION HinweisDefinitionDokument =
-      HinweisDefinition -- {0..*} HinweisDefinition;
-      Dokument -- {1..*} OeREBKRMvs_V1_1.Vorschriften.Dokument;
-    END HinweisDefinitionDokument;
-
-    ASSOCIATION HinweisDefinitionZustaendigeStelle =
-      HinweisDefinition -<> {0..*} HinweisDefinition;
-      ZustaendigeStelle -- {1} OeREBKRMvs_V1_1.Vorschriften.Amt;
-    END HinweisDefinitionZustaendigeStelle;
-
-    ASSOCIATION HinweisVorschrift =
-      Eigentumsbeschraenkung -- {0..*} Eigentumsbeschraenkung;
-      /** Rechtsvorschrift der Eigentumsbeschränkung
-       */
-      Vorschrift -- {1..*} OeREBKRMvs_V1_1.Vorschriften.DokumentBasis;
-      /** Hinweis auf spezifische Artikel.
-       */
-      ArtikelNr : BAG {0..*} OF OeREBKRM_V1_1.ArtikelNummer_;
-    END HinweisVorschrift;
-
-    ASSOCIATION ZustaendigeStelleEigentumsbeschraenkung =
-      /** Zuständige Stelle für die Geobasisdaten (Originaldaten) gem. GeoIG Art. 8 Abs. 1
-       */
-      ZustaendigeStelle -- {1} OeREBKRMvs_V1_1.Vorschriften.Amt;
-      Eigentumsbeschraenkung -<> {0..*} Eigentumsbeschraenkung;
-    END ZustaendigeStelleEigentumsbeschraenkung;
-
-    ASSOCIATION ZustaendigeStelleGeometrie =
-      ZustaendigeStelle -- {1} OeREBKRMvs_V1_1.Vorschriften.Amt;
-      Geometrie -<> {0..*} Geometrie;
-    END ZustaendigeStelleGeometrie;
-
-    ASSOCIATION DarstellungsDienstEigentumsbeschraenkung =
-      /** Darstellungsdienst, auf dem diese Eigentumsbeschränkung sichtbar, aber nicht hervorgehoben, ist.
-       */
-      DarstellungsDienst -- {0..1} DarstellungsDienst;
-      Eigentumsbeschraenkung -<> {1..*} Eigentumsbeschraenkung;
-    END DarstellungsDienstEigentumsbeschraenkung;
-
-  END Transferstruktur;
-
-END OeREBKRMtrsfr_V1_1.
-','2020-07-05 19:17:43.37');
+END OeREBKRM_V2_0.
+','2020-07-09 17:19:07.917');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part2_LOCALISATION_20110830.ili','2.3','InternationalCodes_V1 Localisation_V1{ InternationalCodes_V1} LocalisationCH_V1{ InternationalCodes_V1 Localisation_V1} Dictionaries_V1{ InternationalCodes_V1} DictionariesCH_V1{ InternationalCodes_V1 Dictionaries_V1}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
    ======
@@ -1746,7 +1526,7 @@ MODEL DictionariesCH_V1 (en)
 END DictionariesCH_V1.
 
 !! ########################################################################
-','2020-07-05 19:17:43.37');
+','2020-07-09 17:19:07.917');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CoordSys-20151124.ili','2.3','CoordSys','!! File CoordSys.ili Release 2015-11-24
 
 INTERLIS 2.3;
@@ -1961,80 +1741,38 @@ REFSYSTEM MODEL CoordSys (en) AT "http://www.interlis.ch/models"
 
 END CoordSys.
 
-','2020-07-05 19:17:43.37');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMvs_V1_1.ili','2.3','OeREBKRMvs_V1_1{ CHAdminCodes_V1 LocalisationCH_V1 OeREBKRM_V1_1}','INTERLIS 2.3;
+','2020-07-09 17:19:07.917');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMvs_V2_0.ili','2.3','OeREBKRMvs_V2_0{ CHAdminCodes_V1 LocalisationCH_V1 OeREBKRM_V2_0}','INTERLIS 2.3;
 
 /** Basisdefinition für Erlasse (Rechtsvorschriften, Hinweise auf Gesetzliche Grundlagen)
  */
-!!@ furtherInformation=http://www.cadastre.ch/oereb-public
-!!@ technicalContact=mailto:infovd@swisstopo.ch
-MODEL OeREBKRMvs_V1_1 (de)
-AT "http://models.geo.admin.ch/V_D/OeREB/"
-VERSION "2016-08-15"  =
-  IMPORTS OeREBKRM_V1_1,CHAdminCodes_V1,LocalisationCH_V1;
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRMvs_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS OeREBKRM_V2_0,CHAdminCodes_V1,LocalisationCH_V1;
 
   /** Dieses Teilmodell definiert die Struktur für die Erlasse im Allgemeinen.
    * OID als URIs damit der Verweis auf Grundlagenerlasse (z.B. Kantonale Gesetze auf Bundesgesetze) in einem anderen Behälter (da durch eine andere Stelle erfasst/nachgeführt) verweisen können.
    */
-  TOPIC Vorschriften =
-    OID AS OeREBKRM_V1_1.OEREBOID;
-
-    /** Eine organisatorische Einheit innerhalb der öffentlichen Verwaltung, z.B. eine für Geobasisdaten zuständige Stelle.
-     */
-    CLASS Amt =
-      /** Name des Amtes z.B. "Amt für Gemeinden und Raumordnung des Kantons Bern".
-       */
-      Name : MANDATORY LocalisationCH_V1.MultilingualText;
-      /** Verweis auf die Website des Amtes z.B. "http://www.jgk.be.ch/jgk/de/index/direktion/organisation/agr.html".
-       */
-      AmtImWeb : OeREBKRM_V1_1.WebReferenz;
-      /** UID der organisatorischen Einheit
-       */
-      UID : OeREBKRM_V1_1.UID;
-    END Amt;
-
-    /** Vorschriften (Gesetze, Verordnungen, Rechtsvorschriften) oder einzelne Artikel davon.
-     */
-    CLASS DokumentBasis (ABSTRACT) =
-      /** Verweis auf das Element im Web; z.B. "http://www.admin.ch/ch/d/sr/700/a18.html"
-       */
-      TextImWeb : OeREBKRM_V1_1.MultilingualUri;
-      /** Status, ob dieses Element in Kraft ist
-       */
-      Rechtsstatus : MANDATORY OeREBKRM_V1_1.RechtsStatus;
-      /** Datum, ab dem dieses Element in Auszügen erscheint
-       */
-      publiziertAb : MANDATORY OeREBKRM_V1_1.Datum;
-    END DokumentBasis;
-
-    /** Einzelner Artikel einer Rechtsvorschrift oder einer gesetzlichen Grundlage.
-     */
-    CLASS Artikel
-    EXTENDS DokumentBasis =
-      /** Nummer des Artikels innerhalb der gesetzlichen Grundlage oder der Rechtsvorschrift. z.B. "23"
-       */
-      Nr : MANDATORY OeREBKRM_V1_1.ArtikelNummer;
-      /** z.B. "Ausnahmen innerhalb der Bauzonen regelt das kantonale Recht."
-       */
-      Text : OeREBKRM_V1_1.ArtikelInhaltMehrsprachig;
-    END Artikel;
+  TOPIC Vorschriften
+  EXTENDS OeREBKRM_V2_0.Amt =
+    OID AS OeREBKRM_V2_0.OEREBOID;
 
     /** Dokumente im allgemeinen (Gesetze, Verordnungen, Rechtsvorschriften)
      */
-    CLASS Dokument
-    EXTENDS DokumentBasis =
-      /** Titel (oder falls vorhanden Kurztitel) des Dokuments; z.B. "Raumplanungsgesetz"
+    CLASS Dokument =
+      Typ : MANDATORY OeREBKRM_V2_0.DokumentTyp;
+      /** Titel des Dokuments der im Auszug dargestellt werden soll
        */
       Titel : MANDATORY LocalisationCH_V1.MultilingualText;
-      /** Offizieller Titel des Dokuments; z.B.  "Bundesgesetz über die Raumplanung"
-       */
-      OffiziellerTitel : LocalisationCH_V1.MultilingualText;
       /** Abkürzung des Gesetzes; z.B. "RPG"
        */
       Abkuerzung : LocalisationCH_V1.MultilingualText;
       /** Offizielle Nummer des Gesetzes; z.B. "SR 700"
        */
-      OffizielleNr : TEXT*20;
+      OffizielleNr : LocalisationCH_V1.MultilingualText;
       /** Kantonskürzel falls Vorschrift des Kantons oder der Gemeinde. Falls die Angabe fehlt, ist es eine Vorschrift des Bundes. z.B. "BE"
        */
       Kanton : CHAdminCodes_V1.CHCantonCode;
@@ -2043,155 +1781,33 @@ VERSION "2016-08-15"  =
       Gemeinde : CHAdminCodes_V1.CHMunicipalityCode;
       /** Das Dokument als PDF-Datei
        */
-      Dokument : BLACKBOX BINARY;
+      Dokument : OeREBKRM_V2_0.MultilingualBlob;
+      /** Falls das Dokument nur eine bestimmte Gemeinde betrifft (z.B. Sicherheitszonenplan)
+       */
+      NurInGemeinde : CHAdminCodes_V1.CHMunicipalityCode;
+      /** Verweis auf das Element im Web; z.B. "http://www.admin.ch/ch/d/sr/700/a18.html"
+       */
+      TextImWeb : OeREBKRM_V2_0.MultilingualUri;
+      /** Status, ob dieses Element in Kraft ist
+       */
+      Rechtsstatus : MANDATORY OeREBKRM_V2_0.RechtsStatus;
+      /** Datum, ab dem dieses Dokument in Auszügen erscheint
+       */
+      publiziertAb : MANDATORY OeREBKRM_V2_0.Datum;
+      /** Datum, an/ab dem dieses Dokument nicht mehr in Auszügen erscheint
+       */
+      publiziertBis : OeREBKRM_V2_0.Datum;
     END Dokument;
 
-    /** Reglemente, Vorschriften etc. die generell konkret sind (generell für die Person, die nicht bekannt ist, konkret für dass der Raumbezug mit Karte definiert ist), die zusammen mit der exakten geometrischen Definition als Einheit die Eigentumsbeschränkung unmittelbar beschreiben und innerhalb desselben Verfahrens verabschiedet worden sind.
-     */
-    CLASS Rechtsvorschrift
-    EXTENDS Dokument =
-    END Rechtsvorschrift;
-
-    ASSOCIATION DokumentArtikel =
-      Dokument -<#> {1} Dokument;
-      /** OPTIONAL: Artikel zu diesem Dokument
-       */
-      Artikel -- {0..*} Artikel;
-    END DokumentArtikel;
-
-    ASSOCIATION HinweisWeitereDokumente =
-      Ursprung -- {0..*} Dokument;
-      Hinweis (EXTERNAL) -- {0..*} Dokument;
-      /** Hinweis auf spezifische Artikel.
-       */
-      ArtikelNr : BAG {0..*} OF OeREBKRM_V1_1.ArtikelNummer_;
-    END HinweisWeitereDokumente;
-
     ASSOCIATION ZustaendigeStelleDokument =
-      ZustaendigeStelle -- {1} Amt;
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
       Dokument -<> {0..*} Dokument;
     END ZustaendigeStelleDokument;
 
   END Vorschriften;
 
-  /** Dieses Teilmodell definiert die Struktur für die Hinweise auf die gesetzlichen Grundlagen, die als solche nicht Teil des ÖREB-Katasters sind, von diesem aber referenziert werden können.
-   * OID als URIs damit der Verweis auf Grundlagengesetze (z.B. Kantonale Gesetze auf Bundesgesetze) in einem anderen Behälter (da durch eine andere Stelle erfasst/nachgeführt) verweisen können.
-   */
-  TOPIC HinweiseGesetzlicheGrundlagen
-  EXTENDS OeREBKRMvs_V1_1.Vorschriften =
-
-  END HinweiseGesetzlicheGrundlagen;
-
-END OeREBKRMvs_V1_1.
-','2020-07-05 19:17:43.37');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRM_V1_1.ili','2.3','OeREBKRM_V1_1{ InternationalCodes_V1 LocalisationCH_V1 CatalogueObjects_V1}','INTERLIS 2.3;
-
-/** Basisdefinitionen für das OEREB-Katasterrahmenmodell
- */
-!!@ furtherInformation=http://www.cadastre.ch/oereb-public
-!!@ technicalContact=mailto:infovd@swisstopo.ch
-MODEL OeREBKRM_V1_1 (de)
-AT "http://models.geo.admin.ch/V_D/OeREB/"
-VERSION "2020-05-18"  =
-  IMPORTS LocalisationCH_V1,InternationalCodes_V1,CatalogueObjects_V1;
-
-  DOMAIN
-
-    /** Themenspezifische, maschinen-lesbare Art der Eigentumsbeschränkung
-     */
-    ArtEigentumsbeschraenkung = TEXT*40;
-
-    /** Wertebereich für den Artikeltext einer Rechtsvorschrift oder einer gesetzlichen Grundlage.
-     */
-    ArtikelInhalt = MTEXT;
-
-    /** Nummer eines Artikels in einer Rechtsvorschrift oder gesetzlichen Grundlage.
-     */
-    ArtikelNummer = TEXT*20;
-
-    Datum = FORMAT INTERLIS.XMLDate "1848-1-1" .. "2100-12-31";
-
-    /** Wertebereich für Objektidentifikatoren. Der Wert soll mit einem gültigen Internet Domain-Name anfangen, z.B. "ch.admin.sr.720"
-     */
-    OEREBOID = OID TEXT;
-
-    /** Werteliste zur Unterscheidung ob eine Eigentumsbeschränkung in Kraft ist oder nicht.
-     */
-    RechtsStatus = (
-      /** Die Eigentumsbeschränkung ist in Kraft.
-       */
-      inKraft,
-      /** gem. OeREBKV Art. 12 Abs. 2
-       */
-      laufendeAenderung
-    );
-
-    /** Code für ein Thema oder Sub-Thema.
-        Der Code wird nach folgendem Muster gebildet:
-		ch.{topic}
-		ch.{canton}.{topic}
-		fl.{topic}
-		ch.{bfsnr}.{topic}
-		Wobei {canton} das offizielle zwei-stellige Kürzel des Kantons ist, {to-pic} der Themenname und {bfsnr} die Gemeindenummer gem. BFS.
-     */
-    Thema = TEXT*120;
-
-    /** Unternehmensindentifikation (gemäss. Bundesgesetz über die Unternehmens-Identifikationsnummer SR 431.03) ohne Formatierung z.B. CHE116068369
-     */
-    UID = TEXT*12;
-
-    /** Verweis auf ein Dokument im Web (z.B. eine HTML Seite oder ein PDF-Dokument)
-     */
-    WebReferenz = URI;
-
-  STRUCTURE ArtikelNummer_ = value : MANDATORY ArtikelNummer; END ArtikelNummer_;
-  STRUCTURE Datum_ = value : MANDATORY Datum; END Datum_;
-  STRUCTURE Thema_ = value : MANDATORY Thema; END Thema_;
-  STRUCTURE WebReferenz_ = value : MANDATORY WebReferenz; END WebReferenz_;
-
-  /** Wertebereich für den Artikeltext einer Rechtsvorschrift oder einer gesetzlichen Grundlage.
-   */
-  STRUCTURE ArtikelInhaltMehrsprachig
-  EXTENDS LocalisationCH_V1.MultilingualMText =
-  END ArtikelInhaltMehrsprachig;
-
-  STRUCTURE LocalisedUri =
-    Language : InternationalCodes_V1.LanguageCode_ISO639_1;
-    Text : MANDATORY URI;
-  END LocalisedUri;
-
-  STRUCTURE MultilingualUri =
-    LocalisedText : BAG {1..*} OF OeREBKRM_V1_1.LocalisedUri;
-    UNIQUE (LOCAL) LocalisedText:Language;
-  END MultilingualUri;
-
-  /** Anzeigetexte für Aufzählungen des Rahmenmodells
-   */
-  TOPIC CodelistenText =
-
-    /** Anzeigetexte für die Aufzählung RechtsStatus
-     */
-    CLASS RechtsStatusTxt
-    EXTENDS CatalogueObjects_V1.Catalogues.Item =
-      Code : MANDATORY OeREBKRM_V1_1.RechtsStatus;
-      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
-      UNIQUE Code;
-    END RechtsStatusTxt;
-
-    /** Anzeigetexte für die Aufzählung Thema
-     */
-    CLASS ThemaTxt
-    EXTENDS CatalogueObjects_V1.Catalogues.Item =
-      Code : MANDATORY OeREBKRM_V1_1.Thema;
-      SubThema : OeREBKRM_V1_1.Thema;
-      Titel : MANDATORY LocalisationCH_V1.MultilingualText;
-      UNIQUE Code;
-    END ThemaTxt;
-
-  END CodelistenText;
-
-END OeREBKRM_V1_1.
-','2020-07-05 19:17:43.37');
+END OeREBKRMvs_V2_0.
+','2020-07-09 17:19:07.917');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('CHBase_Part1_GEOMETRY_20110830.ili','2.3','GeometryCHLV03_V1{ CoordSys Units INTERLIS} GeometryCHLV95_V1{ CoordSys Units INTERLIS}','/* ########################################################################
    CHBASE - BASE MODULES OF THE SWISS FEDERATION FOR MINIMAL GEODATA MODELS
    ======
@@ -2369,7 +1985,180 @@ TYPE MODEL GeometryCHLV95_V1 (en)
 END GeometryCHLV95_V1.
 
 !! ########################################################################
-','2020-07-05 19:17:43.37');
+','2020-07-09 17:19:07.917');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_MODEL (filename,iliversion,modelName,content,importDate) VALUES ('OeREBKRMtrsfr_V2_0.ili','2.3','OeREBKRMtrsfr_V2_0{ GeometryCHLV95_V1 CHAdminCodes_V1 LocalisationCH_V1 GeometryCHLV03_V1 OeREBKRM_V2_0 OeREBKRMvs_V2_0}','INTERLIS 2.3;
+
+/** Schnittstelle zwischen zuständiger Stelle für die Geobasisdaten und Katasterorganisation des Kantons.
+ */
+!!@ furtherInformation=https://www.cadastre.ch/oereb-public
+!!@ technicalContact=mailto:vermessung@swisstopo.ch
+MODEL OeREBKRMtrsfr_V2_0 (de)
+AT "https://models.geo.admin.ch/V_D/OeREB/"
+VERSION "2020-07-02"  =
+  IMPORTS OeREBKRM_V2_0,OeREBKRMvs_V2_0,CHAdminCodes_V1,LocalisationCH_V1,GeometryCHLV03_V1,GeometryCHLV95_V1;
+
+  /** Dieses Teilmodell definiert die Struktur der Daten, wie sie von der zuständigen Stelle für die Geobasisdaten an die Abgabestelle des ÖREB-Kataster-Auszugs geliefert werden müssen. Dieses Datenmodell definiert somit, welche Daten ein minimales Datenmodell enthalten muss, um als ÖREB-Kataster fähiges Datenmodell zu gelten.
+   */
+  TOPIC Transferstruktur
+  EXTENDS OeREBKRMvs_V2_0.Vorschriften =
+
+    /** Angaben zum Darstellungsdienst.
+     */
+    CLASS DarstellungsDienst =
+      /** WMS GetMap-Request (für Maschine-Maschine-Kommunikation) inkl. alle benötigten Parameter, z.B. "https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&STYLES=default&SRS=EPSG:21781&BBOX=475000,60000,845000,310000&WIDTH=740&HEIGHT=500&FORMAT=image/png&LAYERS=ch.bazl.kataster-belasteter-standorte-zivilflugplaetze.oereb"
+       */
+      VerweisWMS : MANDATORY OeREBKRM_V2_0.MultilingualUri;
+    END DarstellungsDienst;
+
+    /** Wurzelelement für Informationen über eine Beschränkung des Grundeigentums, die rechtskräftig, z.B. auf Grund einer Genehmigung oder eines richterlichen Entscheids, zustande gekommen ist.
+     */
+    CLASS Eigentumsbeschraenkung =
+      /** Einordnung der Eigentumsbeschränkung in ein ÖREBK-Thema
+       */
+      Thema : MANDATORY OeREBKRM_V2_0.Thema;
+      /** z.B. Planungszonen innerhalb Nutzungsplanung
+       */
+      SubThema : OeREBKRM_V2_0.Thema;
+      /** Status, ob diese Eigentumsbeschränkung in Kraft ist
+       */
+      Rechtsstatus : MANDATORY OeREBKRM_V2_0.RechtsStatus;
+      /** Datum, ab dem diese Eigentumsbeschränkung in Auszügen erscheint
+       */
+      publiziertAb : MANDATORY OeREBKRM_V2_0.Datum;
+      /** Datum, an/ab dem diese Eigentumsbeschränkung nicht mehr in Auszügen erscheint
+       */
+      publiziertBis : OeREBKRM_V2_0.Datum;
+    END Eigentumsbeschraenkung;
+
+    /** Punkt-, linien-, oder flächenförmige Geometrie. Neu zu definierende Eigentumsbeschränkungen sollten i.d.R. flächenförmig sein.
+     */
+    CLASS Geometrie =
+      /** Punktgeometrie
+       */
+      Punkt_LV95 : GeometryCHLV95_V1.Coord2;
+      /** Linienförmige Geometrie
+       */
+      Linie_LV95 : GeometryCHLV95_V1.Line;
+      /** Flächenförmige Geometrie
+       */
+      Flaeche_LV95 : GeometryCHLV95_V1.Surface;
+      /** Status, ob diese Geometrie in Kraft ist
+       */
+      Rechtsstatus : MANDATORY OeREBKRM_V2_0.RechtsStatus;
+      /** Datum, ab dem diese Geometrie in Auszügen erscheint
+       */
+      publiziertAb : MANDATORY OeREBKRM_V2_0.Datum;
+      /** Datum, an/ab dem diese Geometrie nicht mehr in Auszügen erscheint
+       */
+      publiziertBis : OeREBKRM_V2_0.Datum;
+      /** Verweis auf maschinenlesbare Metadaten (XML) der zugrundeliegenden Geobasisdaten. z.B. http://www.geocat.ch/geonetwork/srv/deu/gm03.xml?id=705
+       */
+      MetadatenGeobasisdaten : URI;
+      MANDATORY CONSTRAINT DEFINED(Punkt_LV95) OR DEFINED(Linie_LV95) OR DEFINED(Flaeche_LV95);
+    END Geometrie;
+
+    /** Definition für Hinweise, die unabhängig von einer konkreten Eigentumsbeschränkung gelten (z.B. der Hinweis auf eine Systematische Rechtssammlung). Der Hinweis kann aber beschränkt werden auf eine bestimmtes ÖREB-Thema und/oder Kanton und/oder Gemeinde.
+     */
+    CLASS HinweisDefinition =
+      /** Thema falls der Hinweis für ein bestimmtes ÖREB-Thema gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle ÖREB-Themen gilt.
+       */
+      Thema : OeREBKRM_V2_0.ThemaRef;
+      /** Kantonskürzel falls der Hinweis für ein Kantons-oder Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für alle Kantone gilt. z.B. "BE".
+       */
+      Kanton : CHAdminCodes_V1.CHCantonCode;
+      /** BFSNr falls der Hinweis für ein Gemeindegebiet gilt. Falls die Angabe fehlt, ist es ein Hinweis der für den Kanton oder die Schweiz gilt. z.B. "942".
+       */
+      Gemeinde : CHAdminCodes_V1.CHMunicipalityCode;
+    END HinweisDefinition;
+
+    /** Ein Eintrag in der Planlegende.
+     */
+    CLASS LegendeEintrag =
+      /** Grafischer Teil des Legendeneintrages für die Darstellung. Im PNG-Format mit 300dpi oder im SVG-Format
+       */
+      SymbolPunkt : BLACKBOX BINARY;
+      SymbolLinie : BLACKBOX BINARY;
+      SymbolFlaeche : BLACKBOX BINARY;
+      /** Text des Legendeneintrages
+       */
+      LegendeText : MANDATORY LocalisationCH_V1.MultilingualText;
+      /** Art der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird
+       */
+      ArtCode : MANDATORY OeREBKRM_V2_0.ArtEigentumsbeschraenkung;
+      /** Codeliste der Eigentumsbeschränkung, die durch diesen Legendeneintrag dargestellt wird
+       */
+      ArtCodeliste : MANDATORY URI;
+      /** Zu welchem ÖREB-Thema der Legendeneintrag gehört
+       */
+      Thema : MANDATORY OeREBKRM_V2_0.Thema;
+      /** z.B. Planungszonen innerhalb Nutzungsplanung
+       */
+      SubThema : OeREBKRM_V2_0.Thema;
+      MANDATORY CONSTRAINT DEFINED(SymbolPunkt) OR DEFINED(SymbolLinie) OR DEFINED(SymbolFlaeche);
+    END LegendeEintrag;
+
+    ASSOCIATION DarstellungsDienstEigentumsbeschraenkung =
+      /** Darstellungsdienst, auf dem diese Eigentumsbeschränkung sichtbar, aber nicht hervorgehoben, ist.
+       */
+      DarstellungsDienst -- {0..1} DarstellungsDienst;
+      Eigentumsbeschraenkung -<> {1..*} Eigentumsbeschraenkung;
+    END DarstellungsDienstEigentumsbeschraenkung;
+
+    ASSOCIATION EigentumsbeschraenkungLegende =
+      Eigentumsbeschraenkung -<> {0..*} Eigentumsbeschraenkung;
+      Legende -- {1} LegendeEintrag;
+    END EigentumsbeschraenkungLegende;
+
+    ASSOCIATION GeometrieEigentumsbeschraenkung =
+      /** Geometrie der Eigentumsbeschränkung, die Rechtswirkung hat (als Basis für den Verschnitt mit den Liegenschaften)
+       */
+      Geometrie -- {0..*} Geometrie;
+      Eigentumsbeschraenkung -<#> {1} Eigentumsbeschraenkung;
+    END GeometrieEigentumsbeschraenkung;
+
+    ASSOCIATION GrundlageVerfeinerung =
+      Grundlage (EXTERNAL) -- {0..*} Eigentumsbeschraenkung;
+      Verfeinerung -- {0..*} Eigentumsbeschraenkung;
+    END GrundlageVerfeinerung;
+
+    ASSOCIATION HinweisDefinitionDokument =
+      HinweisDefinition -- {0..*} HinweisDefinition;
+      Dokument -- {1..*} OeREBKRMvs_V2_0.Vorschriften.Dokument;
+    END HinweisDefinitionDokument;
+
+    ASSOCIATION HinweisDefinitionZustaendigeStelle =
+      HinweisDefinition -<> {0..*} HinweisDefinition;
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
+    END HinweisDefinitionZustaendigeStelle;
+
+    ASSOCIATION HinweisVorschrift =
+      Eigentumsbeschraenkung -- {0..*} Eigentumsbeschraenkung;
+      /** Rechtsvorschrift/Hinweis zur Eigentumsbeschränkung
+       */
+      Vorschrift -- {1..*} OeREBKRMvs_V2_0.Vorschriften.Dokument;
+    END HinweisVorschrift;
+
+    ASSOCIATION LegendeDarstellungsdienst =
+      Legende -- {0..*} LegendeEintrag;
+      DarstellungsDienst -<#> {1} DarstellungsDienst;
+    END LegendeDarstellungsdienst;
+
+    ASSOCIATION ZustaendigeStelleEigentumsbeschraenkung =
+      /** Zuständige Stelle für die Geobasisdaten (Originaldaten) gem. GeoIG Art. 8 Abs. 1
+       */
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
+      Eigentumsbeschraenkung -<> {0..*} Eigentumsbeschraenkung;
+    END ZustaendigeStelleEigentumsbeschraenkung;
+
+    ASSOCIATION ZustaendigeStelleGeometrie =
+      ZustaendigeStelle (EXTERNAL) -- {1} OeREBKRM_V2_0.Amt.Amt;
+      Geometrie -<> {0..*} Geometrie;
+    END ZustaendigeStelleGeometrie;
+
+  END Transferstruktur;
+
+END OeREBKRMtrsfr_V2_0.
+','2020-07-09 17:19:07.917');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createMetaInfo','True');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.beautifyEnumDispName','underscore');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.arrayTrafo','coalesce');
@@ -2402,20 +2191,16 @@ INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_nam
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('DictionariesCH_V1','technicalContact','models@geo.admin.ch');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('Dictionaries_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('Dictionaries_V1','technicalContact','models@geo.admin.ch');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRM_V1_1','furtherInformation','http://www.cadastre.ch/oereb-public');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRM_V1_1','technicalContact','mailto:infovd@swisstopo.ch');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRM_V2_0','furtherInformation','https://www.cadastre.ch/oereb-public');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRM_V2_0','technicalContact','mailto:vermessung@swisstopo.ch');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('AdministrativeUnits_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('AdministrativeUnits_V1','technicalContact','models@geo.admin.ch');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('CatalogueObjectTrees_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('CatalogueObjectTrees_V1','technicalContact','models@geo.admin.ch');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('AdministrativeUnitsCH_V1','furtherInformation','https://www.geo.admin.ch/de/geoinformation-schweiz/geobasisdaten/geodata-models.html');
 INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('AdministrativeUnitsCH_V1','technicalContact','mailto:models@geo.admin.ch');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMvs_V1_1','furtherInformation','http://www.cadastre.ch/oereb-public');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMvs_V1_1','technicalContact','mailto:infovd@swisstopo.ch');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMtrsfr_V1_1','furtherInformation','http://www.cadastre.ch/oereb-public');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMtrsfr_V1_1','technicalContact','mailto:infovd@swisstopo.ch');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('CatalogueObjects_V1','furtherInformation','http://www.geo.admin.ch/internet/geoportal/de/home/topics/geobasedata/models.html');
-INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('CatalogueObjects_V1','technicalContact','models@geo.admin.ch');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMvs_V2_0','furtherInformation','https://www.cadastre.ch/oereb-public');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMvs_V2_0','technicalContact','mailto:vermessung@swisstopo.ch');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMtrsfr_V2_0','furtherInformation','https://www.cadastre.ch/oereb-public');
+INSERT INTO afu_grundwasserschutz_oereb.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('OeREBKRMtrsfr_V2_0','technicalContact','mailto:vermessung@swisstopo.ch');
 COMMENT ON SCHEMA afu_grundwasserschutz_oereb IS 'Schema für den Datenumbau ins OEREB-Transferschema';
 GRANT USAGE ON SCHEMA afu_grundwasserschutz_oereb TO :PG_WRITE_USER;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA afu_grundwasserschutz_oereb TO :PG_WRITE_USER;
